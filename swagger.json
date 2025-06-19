@@ -1,0 +1,1383 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/san-pham": {
+      "post": {
+        "description": "Tạo một sản phẩm mới với thông tin đầy đủ bao gồm hình ảnh",
+        "operationId": "SanPhamController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSanPhamDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sản phẩm được tạo thành công"
+          },
+          "400": {
+            "description": "Dữ liệu đầu vào không hợp lệ"
+          },
+          "404": {
+            "description": "Nhân viên hoặc danh mục không tồn tại"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tạo sản phẩm mới",
+        "tags": [
+          "Sản phẩm"
+        ]
+      },
+      "get": {
+        "description": "Trả về danh sách tất cả sản phẩm với thông tin chi tiết",
+        "operationId": "SanPhamController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lấy danh sách sản phẩm thành công"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy tất cả sản phẩm",
+        "tags": [
+          "Sản phẩm"
+        ]
+      }
+    },
+    "/san-pham/page/{stt}": {
+      "get": {
+        "description": "Phân trang danh sách sản phẩm, mỗi trang 20 sản phẩm",
+        "operationId": "SanPhamController_findByPage",
+        "parameters": [
+          {
+            "name": "stt",
+            "required": true,
+            "in": "path",
+            "description": "Số trang (bắt đầu từ 1)",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy sản phẩm theo trang thành công"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy sản phẩm theo trang",
+        "tags": [
+          "Sản phẩm"
+        ]
+      }
+    },
+    "/san-pham/search": {
+      "get": {
+        "description": "Tìm kiếm sản phẩm dựa trên tên sản phẩm",
+        "operationId": "SanPhamController_findByName",
+        "parameters": [
+          {
+            "name": "ten",
+            "required": true,
+            "in": "query",
+            "description": "Tên sản phẩm cần tìm",
+            "schema": {
+              "example": "iPhone",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tìm kiếm thành công"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tìm kiếm sản phẩm theo tên",
+        "tags": [
+          "Sản phẩm"
+        ]
+      }
+    },
+    "/san-pham/danh-muc/{danhMucId}": {
+      "get": {
+        "description": "Trả về danh sách sản phẩm thuộc một danh mục cụ thể",
+        "operationId": "SanPhamController_findByDanhMuc",
+        "parameters": [
+          {
+            "name": "danhMucId",
+            "required": true,
+            "in": "path",
+            "description": "ID danh mục",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy sản phẩm theo danh mục thành công"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy sản phẩm theo danh mục",
+        "tags": [
+          "Sản phẩm"
+        ]
+      }
+    },
+    "/san-pham/{id}": {
+      "get": {
+        "description": "Trả về thông tin chi tiết của một sản phẩm bao gồm hình ảnh và đánh giá",
+        "operationId": "SanPhamController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy thông tin sản phẩm thành công"
+          },
+          "404": {
+            "description": "Không tìm thấy sản phẩm"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy thông tin chi tiết sản phẩm",
+        "tags": [
+          "Sản phẩm"
+        ]
+      },
+      "delete": {
+        "description": "Xóa sản phẩm khỏi hệ thống",
+        "operationId": "SanPhamController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm cần xóa",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa sản phẩm thành công"
+          },
+          "404": {
+            "description": "Không tìm thấy sản phẩm"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Xóa sản phẩm",
+        "tags": [
+          "Sản phẩm"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/taikhoan": {
+      "get": {
+        "operationId": "TaiKhoanController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "TaiKhoan"
+        ]
+      }
+    },
+    "/taikhoan/{id}": {
+      "get": {
+        "operationId": "TaiKhoanController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "TaiKhoan"
+        ]
+      },
+      "patch": {
+        "operationId": "TaiKhoanController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTaiKhoanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "TaiKhoan"
+        ]
+      },
+      "delete": {
+        "operationId": "TaiKhoanController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "TaiKhoan"
+        ]
+      }
+    },
+    "/danh-muc": {
+      "post": {
+        "operationId": "DanhMucController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDanhMucDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DanhMuc"
+        ]
+      },
+      "get": {
+        "operationId": "DanhMucController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DanhMuc"
+        ]
+      }
+    },
+    "/danh-muc/{tendanhmuc}": {
+      "get": {
+        "operationId": "DanhMucController_findOne",
+        "parameters": [
+          {
+            "name": "tendanhmuc",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DanhMuc"
+        ]
+      }
+    },
+    "/danh-muc/{id}": {
+      "patch": {
+        "operationId": "DanhMucController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDanhMucDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DanhMuc"
+        ]
+      },
+      "delete": {
+        "operationId": "DanhMucController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DanhMuc"
+        ]
+      }
+    },
+    "/nhan-vien": {
+      "post": {
+        "operationId": "NhanVienController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNhanVienDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "NhanVien"
+        ]
+      },
+      "get": {
+        "operationId": "NhanVienController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "NhanVien"
+        ]
+      }
+    },
+    "/nhan-vien/{id}": {
+      "get": {
+        "operationId": "NhanVienController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "NhanVien"
+        ]
+      }
+    },
+    "/danh-gia": {
+      "post": {
+        "operationId": "DanhGiaController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDanhGiaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Đánh giá được tạo thành công"
+          },
+          "400": {
+            "description": "Dữ liệu đầu vào không hợp lệ hoặc đã đánh giá sản phẩm"
+          },
+          "403": {
+            "description": "Không có quyền hoặc chưa mua sản phẩm này"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tạo đánh giá mới (Chỉ khách hàng)",
+        "tags": [
+          "Đánh giá"
+        ]
+      }
+    },
+    "/danh-gia/san-pham/{sanPhamId}": {
+      "get": {
+        "operationId": "DanhGiaController_getBySanPham",
+        "parameters": [
+          {
+            "name": "sanPhamId",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy danh sách thành công"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy đánh giá theo ID sản phẩm",
+        "tags": [
+          "Đánh giá"
+        ]
+      }
+    },
+    "/danh-gia/khach-hang/{khachHangId}": {
+      "get": {
+        "operationId": "DanhGiaController_getByKhachHang",
+        "parameters": [
+          {
+            "name": "khachHangId",
+            "required": true,
+            "in": "path",
+            "description": "ID khách hàng",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy danh sách thành công"
+          },
+          "403": {
+            "description": "Không có quyền truy cập"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy đánh giá theo ID khách hàng",
+        "tags": [
+          "Đánh giá"
+        ]
+      }
+    },
+    "/danh-gia/rating/{sanPhamId}": {
+      "get": {
+        "operationId": "DanhGiaController_getSanPhamRating",
+        "parameters": [
+          {
+            "name": "sanPhamId",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy thông tin đánh giá thành công"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy thông tin đánh giá trung bình của sản phẩm",
+        "tags": [
+          "Đánh giá"
+        ]
+      }
+    },
+    "/danh-gia/{id}": {
+      "get": {
+        "operationId": "DanhGiaController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID đánh giá",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lấy thông tin thành công"
+          },
+          "404": {
+            "description": "Không tìm thấy đánh giá"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy thông tin chi tiết đánh giá theo ID",
+        "tags": [
+          "Đánh giá"
+        ]
+      },
+      "delete": {
+        "operationId": "DanhGiaController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID đánh giá cần xóa",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa thành công"
+          },
+          "403": {
+            "description": "Không có quyền xóa"
+          },
+          "404": {
+            "description": "Không tìm thấy đánh giá"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Xóa đánh giá",
+        "tags": [
+          "Đánh giá"
+        ]
+      }
+    },
+    "/thong-tin-lien-he": {
+      "post": {
+        "operationId": "ThongTinLienHeController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateThongTinLienHeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ThongTinLienHe"
+        ]
+      },
+      "get": {
+        "operationId": "ThongTinLienHeController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ThongTinLienHe"
+        ]
+      }
+    },
+    "/thong-tin-lien-he/{id}": {
+      "get": {
+        "operationId": "ThongTinLienHeController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ThongTinLienHe"
+        ]
+      },
+      "patch": {
+        "operationId": "ThongTinLienHeController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateThongTinLienHeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ThongTinLienHe"
+        ]
+      },
+      "delete": {
+        "operationId": "ThongTinLienHeController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ThongTinLienHe"
+        ]
+      }
+    },
+    "/khach-hang": {
+      "post": {
+        "operationId": "KhachHangController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKhachHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Đăng ký khách hàng",
+        "tags": [
+          "KhachHang"
+        ]
+      },
+      "get": {
+        "operationId": "KhachHangController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "KhachHang"
+        ]
+      }
+    },
+    "/khach-hang/{id}": {
+      "get": {
+        "operationId": "KhachHangController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "KhachHang"
+        ]
+      },
+      "delete": {
+        "operationId": "KhachHangController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "KhachHang"
+        ]
+      }
+    },
+    "/don-hang/cart/add": {
+      "post": {
+        "operationId": "DonHangController_addToCart",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToCartDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thêm vào giỏ hàng thành công"
+          },
+          "400": {
+            "description": "Sản phẩm không tồn tại hoặc không đủ số lượng"
+          },
+          "403": {
+            "description": "Chỉ khách hàng mới có quyền thêm vào giỏ hàng"
+          }
+        },
+        "summary": "Thêm sản phẩm vào giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
+    "/don-hang/cart": {
+      "get": {
+        "operationId": "DonHangController_getCart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lấy giỏ hàng thành công"
+          },
+          "403": {
+            "description": "Chỉ khách hàng mới có quyền xem giỏ hàng"
+          }
+        },
+        "summary": "Xem giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
+    "/don-hang/cart/update/{maSanPham}/{soLuong}": {
+      "patch": {
+        "operationId": "DonHangController_updateCartItem",
+        "parameters": [
+          {
+            "name": "maSanPham",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "soLuong",
+            "required": true,
+            "in": "path",
+            "description": "Số lượng mới",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cập nhật giỏ hàng thành công"
+          },
+          "400": {
+            "description": "Không đủ số lượng trong kho"
+          },
+          "404": {
+            "description": "Sản phẩm không có trong giỏ hàng"
+          }
+        },
+        "summary": "Cập nhật số lượng sản phẩm trong giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
+    "/don-hang/cart/remove/{maSanPham}": {
+      "delete": {
+        "operationId": "DonHangController_removeFromCart",
+        "parameters": [
+          {
+            "name": "maSanPham",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm cần xóa",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Xóa sản phẩm khỏi giỏ hàng thành công"
+          },
+          "404": {
+            "description": "Sản phẩm không có trong giỏ hàng"
+          }
+        },
+        "summary": "Xóa sản phẩm khỏi giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
+    "/don-hang/cart/clear": {
+      "delete": {
+        "operationId": "DonHangController_clearCart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Xóa giỏ hàng thành công"
+          }
+        },
+        "summary": "Xóa toàn bộ giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
+    "/don-hang/cart/checkout": {
+      "post": {
+        "operationId": "DonHangController_checkoutCart",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutCartDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Thanh toán thành công"
+          },
+          "400": {
+            "description": "Giỏ hàng trống hoặc sản phẩm không đủ số lượng"
+          },
+          "404": {
+            "description": "Không tìm thấy giỏ hàng"
+          }
+        },
+        "summary": "Thanh toán giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API Quản lý Siêu Thị",
+    "description": "API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "users",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateSanPhamDto": {
+        "type": "object",
+        "properties": {
+          "ten": {
+            "type": "string"
+          },
+          "soLuongHienCon": {
+            "type": "number"
+          },
+          "hanSuDung": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ngaySanXuat": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "moTa": {
+            "type": "string"
+          },
+          "gia": {
+            "type": "number"
+          },
+          "danhMucId": {
+            "type": "number",
+            "description": "ID của danh mục sản phẩm"
+          },
+          "hinhAnhs": {
+            "description": "Danh sách hình ảnh sản phẩm",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ten",
+          "soLuongHienCon",
+          "hanSuDung",
+          "ngaySanXuat",
+          "moTa",
+          "gia",
+          "danhMucId"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "tenDangNhap": {
+            "type": "string"
+          },
+          "matKhau": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tenDangNhap",
+          "matKhau"
+        ]
+      },
+      "UpdateTaiKhoanDto": {
+        "type": "object",
+        "properties": {
+          "tenDangNhap": {
+            "type": "string"
+          },
+          "matKhau": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateDanhMucDto": {
+        "type": "object",
+        "properties": {
+          "tenDanhMuc": {
+            "type": "string",
+            "description": "Tên danh mục"
+          },
+          "moTa": {
+            "type": "string",
+            "description": "Mô tả danh mục"
+          }
+        }
+      },
+      "UpdateDanhMucDto": {
+        "type": "object",
+        "properties": {
+          "tenDanhMuc": {
+            "type": "string",
+            "description": "Tên danh mục"
+          },
+          "moTa": {
+            "type": "string",
+            "description": "Mô tả danh mục"
+          }
+        }
+      },
+      "CreateNhanVienDto": {
+        "type": "object",
+        "properties": {
+          "tenNhanVien": {
+            "type": "string"
+          },
+          "sdt": {
+            "type": "string"
+          },
+          "diaChi": {
+            "type": "string"
+          },
+          "vaiTro": {
+            "type": "string"
+          },
+          "tenDangNhap": {
+            "type": "string"
+          },
+          "matKhau": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tenNhanVien",
+          "sdt",
+          "diaChi",
+          "vaiTro",
+          "tenDangNhap",
+          "matKhau"
+        ]
+      },
+      "CreateDanhGiaDto": {
+        "type": "object",
+        "properties": {
+          "soSao": {
+            "type": "number",
+            "description": "Số sao đánh giá (1-5)",
+            "minimum": 1,
+            "maximum": 5,
+            "example": 5
+          },
+          "noiDung": {
+            "type": "string",
+            "description": "Nội dung đánh giá",
+            "example": "Sản phẩm rất tốt, giao hàng nhanh chóng!"
+          },
+          "sanPhamId": {
+            "type": "number",
+            "description": "ID sản phẩm được đánh giá",
+            "example": 1
+          }
+        },
+        "required": [
+          "soSao",
+          "noiDung",
+          "sanPhamId"
+        ]
+      },
+      "CreateThongTinLienHeDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateThongTinLienHeDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateKhachHangDto": {
+        "type": "object",
+        "properties": {
+          "tenKhachHang": {
+            "type": "string"
+          },
+          "sdt": {
+            "type": "string"
+          },
+          "tenDangNhap": {
+            "type": "string"
+          },
+          "matKhau": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tenKhachHang",
+          "sdt",
+          "tenDangNhap",
+          "matKhau"
+        ]
+      },
+      "UpdateKhachHangDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "AddToCartDto": {
+        "type": "object",
+        "properties": {
+          "sanPhamId": {
+            "type": "number",
+            "description": "ID sản phẩm",
+            "example": 1
+          },
+          "soLuong": {
+            "type": "number",
+            "description": "Số lượng",
+            "example": 2,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "sanPhamId",
+          "soLuong"
+        ]
+      },
+      "CheckoutCartDto": {
+        "type": "object",
+        "properties": {
+          "tenDonHang": {
+            "type": "string"
+          },
+          "ngayChuanBiHang": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ngayNhanHang": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "donViVanChuyen": {
+            "type": "string"
+          },
+          "phuongThucThanhToan": {
+            "type": "string"
+          },
+          "trangThaiDonHang": {
+            "type": "string"
+          },
+          "diaChiGiaoHang": {
+            "type": "string",
+            "description": "Địa chỉ giao hàng"
+          },
+          "sdtNguoiNhan": {
+            "type": "string",
+            "description": "Số điện thoại người nhận"
+          },
+          "tenNguoiNhan": {
+            "type": "string",
+            "description": "Tên người nhận"
+          },
+          "ghiChu": {
+            "type": "string",
+            "description": "Ghi chú"
+          }
+        },
+        "required": [
+          "tenDonHang",
+          "ngayChuanBiHang",
+          "ngayNhanHang",
+          "donViVanChuyen",
+          "phuongThucThanhToan",
+          "trangThaiDonHang",
+          "diaChiGiaoHang",
+          "sdtNguoiNhan",
+          "tenNguoiNhan",
+          "ghiChu"
+        ]
+      }
+    }
+  }
+}

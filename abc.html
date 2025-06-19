@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình khám phá CSDL Siêu thị Trực tuyến</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Warm Neutrals (Light Beige Background, Dark Slate Text, Muted Teal Accent) -->
+    <!-- Application Structure Plan: The application is structured into thematic, navigable sections to transform the dense report into an interactive learning journey. Instead of a linear document, it uses a dashboard-like approach with a main interactive schema explorer. Key sections include a 'Project Overview', 'Core Business Flows' (visualized), the central 'Data Structure Explorer', and an interactive 'Normalization' tutorial. This non-linear, task-oriented structure is chosen to allow users to explore concepts at their own pace, focusing on visual and interactive understanding rather than passive reading, which is more effective for complex technical topics like database design. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: ERD and Relational Schema (Part 3 & 4) -> Goal: Organize & Explore Relationships -> Viz: Interactive Diagram (HTML/CSS divs + Canvas lines) -> Interaction: Click on entities to see details (attributes, keys), hover to highlight relationships. Justification: Merges two static diagrams into one dynamic, explorable tool, making the core database structure tangible and easier to understand. Library/Method: Vanilla JS, HTML, CSS, Canvas API.
+        - Report Info: Normalization Theory (Part 4.3) -> Goal: Explain a process -> Viz: Interactive Before/After Tables -> Interaction: User clicks buttons (1NF, 2NF, 3NF) to see how a sample table is transformed to remove anomalies. Justification: Actively demonstrates the concept of normalization, which is more effective than static text descriptions. Library/Method: Vanilla JS & HTML/CSS.
+        - Report Info: Business Logic (Part 2.3) -> Goal: Illustrate a process -> Viz: Step-by-step flowchart diagram -> Interaction: Clicking through steps highlights parts of the flow. Justification: Visualizes abstract processes, making them easier to follow. Library/Method: HTML/CSS & JS.
+        - Report Info: System Goals (Part 1.2) -> Goal: Inform/Summarize -> Viz: Donut Chart -> Interaction: Hover to see tooltips. Justification: Provides a quick, visual summary of system priorities to break up introductory text. Library/Method: Chart.js.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF5;
+            color: #3D4A5C;
+        }
+
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #1E6091;
+            border-bottom-color: #1E6091;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        .entity {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #D1D5DB;
+        }
+
+        .entity:hover,
+        .entity.highlighted {
+            border-color: #1E6091;
+            transform: scale(1.05);
+            background-color: #E0F2FE;
+        }
+
+        .entity.selected {
+            border-color: #1E6091;
+            background-color: #BFDBFE;
+            box-shadow: 0 0 15px rgba(30, 96, 145, 0.5);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 90vw;
+            width: 600px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+
+        .normalization-table th {
+            background-color: #e5e7eb;
+        }
+
+        .normalization-table td,
+        .normalization-table th {
+            border: 1px solid #d1d5db;
+            padding: 0.5rem;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-[#1E6091]">
+                CSDL Siêu Thị
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link py-1">Tổng quan</a>
+                <a href="#logic-flow" class="nav-link py-1">Luồng nghiệp vụ</a>
+                <a href="#schema-explorer" class="nav-link py-1">Khám phá Lược đồ</a>
+                <a href="#normalization" class="nav-link py-1">Chuẩn hóa</a>
+                <a href="#requirements" class="nav-link py-1">Yêu cầu</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#overview" class="block py-2 px-6 text-sm hover:bg-gray-100">Tổng quan</a>
+            <a href="#logic-flow" class="block py-2 px-6 text-sm hover:bg-gray-100">Luồng nghiệp vụ</a>
+            <a href="#schema-explorer" class="block py-2 px-6 text-sm hover:bg-gray-100">Khám phá Lược đồ</a>
+            <a href="#normalization" class="block py-2 px-6 text-sm hover:bg-gray-100">Chuẩn hóa</a>
+            <a href="#requirements" class="block py-2 px-6 text-sm hover:bg-gray-100">Yêu cầu</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section id="overview" class="mb-24 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#184E77] mb-4">Thiết kế Cơ sở dữ liệu cho Siêu thị Trực
+                tuyến</h1>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-12">
+                Một hệ thống quản lý siêu thị trực tuyến hiệu quả được xây dựng trên nền tảng một cơ sở dữ liệu mạnh mẽ,
+                có cấu trúc tốt. Báo cáo này sẽ hướng dẫn bạn qua toàn bộ quy trình thiết kế, từ việc xác định mục tiêu
+                đến việc tạo ra một lược đồ quan hệ đã được chuẩn hóa.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="text-left p-6">
+                    <h2 class="text-3xl font-bold text-[#184E77] mb-4">Mục tiêu Hệ thống</h2>
+                    <p class="text-gray-600 mb-6">
+                        Mục tiêu hàng đầu của hệ thống là cung cấp một nền tảng mua sắm trực tuyến thuận tiện và hiệu
+                        quả, đồng thời tối ưu hóa các quy trình quản lý nội bộ. Điều này bao gồm việc quản lý kho hàng,
+                        xử lý đơn hàng tự động, và đảm bảo an toàn, bảo mật cho mọi giao dịch. Hệ thống được thiết kế để
+                        hỗ trợ các quyết định kinh doanh thông qua việc cung cấp các công cụ phân tích và báo cáo mạnh
+                        mẽ.
+                    </p>
+                    <a href="#schema-explorer"
+                        class="inline-block bg-[#1E6091] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#1A5078] transition-colors">
+                        Khám phá Cấu trúc
+                    </a>
+                </div>
+                <div class="chart-container">
+                    <canvas id="goalsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="logic-flow" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#184E77]">Luồng Nghiệp vụ Cốt lõi</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
+                    Để hiểu rõ cách hệ thống hoạt động, hãy cùng xem xét quy trình đặt hàng của khách hàng, một trong
+                    những luồng nghiệp vụ quan trọng nhất. Mỗi bước đều có sự tương tác chặt chẽ với cơ sở dữ liệu để
+                    đảm bảo tính chính xác và nhất quán.
+                </p>
+            </div>
+            <div class="relative w-full overflow-x-auto">
+                <div class="flex items-center space-x-4 md:space-x-8 p-4 min-w-[700px]">
+                    <div class="flow-step text-center w-40" data-step="1">
+                        <div
+                            class="mb-2 h-20 w-20 flex items-center justify-center bg-blue-100 text-[#1E6091] rounded-full mx-auto text-3xl font-bold border-2 border-transparent">
+                            1</div>
+                        <p class="font-semibold">Thêm vào giỏ</p>
+                    </div>
+                    <div class="text-gray-400 text-2xl font-light mt-[-2rem]">&#8594;</div>
+                    <div class="flow-step text-center w-40" data-step="2">
+                        <div
+                            class="mb-2 h-20 w-20 flex items-center justify-center bg-blue-100 text-[#1E6091] rounded-full mx-auto text-3xl font-bold border-2 border-transparent">
+                            2</div>
+                        <p class="font-semibold">Kiểm tra tồn kho</p>
+                    </div>
+                    <div class="text-gray-400 text-2xl font-light mt-[-2rem]">&#8594;</div>
+                    <div class="flow-step text-center w-40" data-step="3">
+                        <div
+                            class="mb-2 h-20 w-20 flex items-center justify-center bg-blue-100 text-[#1E6091] rounded-full mx-auto text-3xl font-bold border-2 border-transparent">
+                            3</div>
+                        <p class="font-semibold">Thanh toán</p>
+                    </div>
+                    <div class="text-gray-400 text-2xl font-light mt-[-2rem]">&#8594;</div>
+                    <div class="flow-step text-center w-40" data-step="4">
+                        <div
+                            class="mb-2 h-20 w-20 flex items-center justify-center bg-blue-100 text-[#1E6091] rounded-full mx-auto text-3xl font-bold border-2 border-transparent">
+                            4</div>
+                        <p class="font-semibold">Cập nhật CSDL</p>
+                    </div>
+                </div>
+            </div>
+            <div id="flow-description" class="mt-8 card p-6 max-w-3xl mx-auto min-h-[100px] text-center">
+                <p class="text-gray-700">Nhấp vào một bước để xem mô tả chi tiết.</p>
+            </div>
+        </section>
+
+        <section id="schema-explorer" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#184E77]">Khám phá Lược đồ Quan hệ</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
+                    Đây là trái tim của hệ thống. Nhấp vào bất kỳ thực thể nào để xem chi tiết thuộc tính, khóa và mối
+                    quan hệ của nó. Các đường nối thể hiện mối quan hệ giữa các bảng.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-2/3 relative h-[700px] md:h-[800px] bg-gray-50 rounded-lg p-4" id="schema-container">
+                    <canvas id="schema-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+                </div>
+                <div class="lg:w-1/3">
+                    <div id="entity-details" class="card p-6 sticky top-24">
+                        <h3 class="text-2xl font-bold text-[#1E6091] mb-4">Chi tiết Thực thể</h3>
+                        <div id="details-content" class="text-gray-600">
+                            <p>Chọn một thực thể trên sơ đồ để xem thông tin chi tiết tại đây.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="normalization" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#184E77]">Quy trình Chuẩn hóa Dữ liệu</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
+                    Chuẩn hóa là quá trình tổ chức dữ liệu để giảm thiểu dư thừa và cải thiện tính toàn vẹn. Hãy xem
+                    cách một bảng dữ liệu thô được chuyển đổi qua các dạng chuẩn 1NF, 2NF và 3NF.
+                </p>
+            </div>
+            <div class="card p-6 md:p-8">
+                <div class="flex justify-center space-x-2 mb-8">
+                    <button class="norm-btn bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg"
+                        data-norm="0">Dữ liệu thô</button>
+                    <button class="norm-btn bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg"
+                        data-norm="1">1NF</button>
+                    <button class="norm-btn bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg"
+                        data-norm="2">2NF</button>
+                    <button class="norm-btn bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg"
+                        data-norm="3">3NF</button>
+                </div>
+                <div id="norm-content">
+
+                </div>
+            </div>
+        </section>
+
+        <section id="requirements" class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#184E77]">Yêu cầu Chức năng</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-600 mt-4">
+                    Hệ thống được thiết kế để đáp ứng một loạt các yêu cầu chức năng, đảm bảo hoạt động hiệu quả cho cả
+                    khách hàng và quản trị viên.
+                </p>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="req-accordion-item border border-gray-200 rounded-lg">
+                    <button
+                        class="req-accordion-header w-full text-left p-4 font-semibold text-lg bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                        Quản lý Người dùng & Tài khoản
+                        <span class="transform transition-transform duration-300">&#9662;</span>
+                    </button>
+                    <div class="req-accordion-content hidden p-4 border-t border-gray-200">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>Người dùng có khả năng đăng ký tài khoản mới, đăng nhập an toàn và quản lý thông tin cá
+                                nhân.</li>
+                            <li>Quản trị viên có quyền quản lý tài khoản của cả nhân viên và khách hàng.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="req-accordion-item border border-gray-200 rounded-lg">
+                    <button
+                        class="req-accordion-header w-full text-left p-4 font-semibold text-lg bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                        Quản lý Sản phẩm
+                        <span class="transform transition-transform duration-300">&#9662;</span>
+                    </button>
+                    <div class="req-accordion-content hidden p-4 border-t border-gray-200">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>Hiển thị danh mục sản phẩm đầy đủ với thông tin chi tiết.</li>
+                            <li>Khách hàng có thể tìm kiếm, duyệt và lọc sản phẩm.</li>
+                            <li>Theo dõi tồn kho theo thời gian thực và gửi cảnh báo.</li>
+                            <li>Quản trị viên có thể thêm, sửa, xóa sản phẩm.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="req-accordion-item border border-gray-200 rounded-lg">
+                    <button
+                        class="req-accordion-header w-full text-left p-4 font-semibold text-lg bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                        Quản lý Đơn hàng & Thanh toán
+                        <span class="transform transition-transform duration-300">&#9662;</span>
+                    </button>
+                    <div class="req-accordion-content hidden p-4 border-t border-gray-200">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>Khách hàng quản lý giỏ hàng và thực hiện thanh toán an toàn.</li>
+                            <li>Hỗ trợ nhiều phương thức thanh toán tích hợp.</li>
+                            <li>Tự động cập nhật mức tồn kho sau khi giao dịch thành công.</li>
+                            <li>Quản trị viên theo dõi và quản lý trạng thái đơn hàng.</li>
+                            <li>Đảm bảo tuân thủ các tiêu chuẩn bảo mật ngành (PCI DSS).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Trình khám phá CSDL Siêu thị Trực tuyến. Được tạo ra để minh họa thiết kế cơ sở dữ liệu.</p>
+        </div>
+    </footer>
+
+    <div id="entity-modal" class="modal-overlay">
+        <div class="modal-content" id="modal-inner-content"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const goalsChartCtx = document.getElementById('goalsChart').getContext('2d');
+            new Chart(goalsChartCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Trải nghiệm Người dùng', 'Quản lý Vận hành', 'Bảo mật & Toàn vẹn Dữ liệu'],
+                    datasets: [{
+                        label: 'Mục tiêu Hệ thống',
+                        data: [40, 35, 25],
+                        backgroundColor: [
+                            'rgba(30, 96, 145, 0.8)',
+                            'rgba(26, 80, 120, 0.8)',
+                            'rgba(93, 173, 226, 0.8)'
+                        ],
+                        borderColor: [
+                            '#FFFFFF'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Phân bổ Trọng tâm Hệ thống'
+                        }
+                    }
+                }
+            });
+
+            const flowSteps = document.querySelectorAll('.flow-step');
+            const flowDescription = document.getElementById('flow-description');
+            const flowDescriptions = {
+                1: { title: 'Bước 1: Thêm sản phẩm vào giỏ hàng', desc: 'Khách hàng duyệt qua danh mục và chọn sản phẩm mong muốn. Hệ thống ghi nhận lựa chọn này vào một phiên giỏ hàng tạm thời.' },
+                2: { title: 'Bước 2: Kiểm tra tồn kho thời gian thực', desc: 'Ngay khi thanh toán, hệ thống truy vấn CSDL để xác nhận số lượng sản phẩm có sẵn, đảm bảo không bán quá số lượng trong kho.' },
+                3: { title: 'Bước 3: Xử lý thanh toán', desc: 'Hệ thống tính tổng giá trị, áp dụng khuyến mãi và xử lý giao dịch qua cổng thanh toán an toàn. Chi tiết giao dịch được ghi lại.' },
+                4: { title: 'Bước 4: Cập nhật cơ sở dữ liệu', desc: 'Sau khi thanh toán thành công, hệ thống tạo một bản ghi đơn hàng mới và ngay lập tức cập nhật (giảm) số lượng tồn kho của các sản phẩm đã bán.' }
+            };
+
+            flowSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const stepNum = step.dataset.step;
+                    flowDescription.innerHTML = `<h4 class="font-bold text-lg mb-2 text-[#1E6091]">${flowDescriptions[stepNum].title}</h4><p>${flowDescriptions[stepNum].desc}</p>`;
+                    flowSteps.forEach(s => s.querySelector('div').classList.remove('border-blue-500', 'bg-blue-200'));
+                    step.querySelector('div').classList.add('border-blue-500', 'bg-blue-200');
+                });
+            });
+
+            const dbSchema = {
+                KhachHang: { name: 'Khách hàng', pos: { x: 5, y: 30 }, pk: 'MaKhachHang', fks: ['MaTaiKhoan'], desc: "Lưu trữ thông tin cá nhân của khách hàng đăng ký.", relations: [{ to: 'DonHang', type: '1:N' }, { to: 'DanhGia', type: '1:N' }, { to: 'ThongTinLienHe', type: '1:N' }] },
+                NhanVien: { name: 'Nhân viên', pos: { x: 5, y: 70 }, pk: 'MaNhanVien', fks: ['MaTaiKhoan'], desc: "Lưu trữ thông tin về nhân viên quản lý hệ thống.", relations: [{ to: 'SanPham', type: '1:N' }] },
+                TaiKhoan: { name: 'Tài khoản', pos: { x: 5, y: 50 }, pk: 'TenDangNhap', fks: [], desc: "Quản lý thông tin đăng nhập và phân quyền cho người dùng.", relations: [{ to: 'KhachHang', type: '1:1' }, { to: 'NhanVien', type: '1:1' }] },
+                SanPham: { name: 'Sản phẩm', pos: { x: 40, y: 70 }, pk: 'MaSanPham', fks: ['MaDanhMuc', 'MaNhanVien'], desc: "Chứa tất cả thông tin chi tiết về sản phẩm được bán.", relations: [{ to: 'ChiTietDonHang', type: '1:N' }, { to: 'KhuyenMai_San_Pham', type: 'M:N' }, { to: 'DanhGia', type: '1:N' }] },
+                DanhMuc_San_Pham: { name: 'Danh mục', pos: { x: 40, y: 90 }, pk: 'MaDanhMuc', fks: [], desc: "Phân loại sản phẩm thành các nhóm.", relations: [{ to: 'SanPham', type: '1:N' }] },
+                DonHang: { name: 'Đơn hàng', pos: { x: 40, y: 30 }, pk: 'MaDonHang', fks: ['MaKhachHang', 'MaThongTinLienHe'], desc: "Lưu trữ thông tin về mỗi giao dịch mua hàng.", relations: [{ to: 'ChiTietDonHang', type: '1:N' }] },
+                ChiTietDonHang: { name: 'Chi tiết ĐH', pos: { x: 75, y: 50 }, pk: '(MaDonHang, MaSanPham)', fks: ['MaDonHang', 'MaSanPham'], desc: "Bảng liên kết thể hiện sản phẩm nào có trong đơn hàng nào.", relations: [] },
+                ThongTinLienHe: { name: 'TT Liên hệ', pos: { x: 40, y: 10 }, pk: 'MaThongTinLienHe', fks: ['MaKhachHang'], desc: "Lưu các địa chỉ giao hàng khác nhau của khách hàng.", relations: [{ to: 'DonHang', type: '1:N' }] },
+                DanhGia: { name: 'Đánh giá', pos: { x: 75, y: 70 }, pk: 'MaDanhGia', fks: ['MaKhachHang', 'MaSanPham'], desc: "Lưu trữ các đánh giá, bình luận của khách hàng về sản phẩm.", relations: [] },
+                KhuyenMai: { name: 'Khuyến mãi', pos: { x: 75, y: 90 }, pk: 'MaKhuyenMai', fks: [], desc: "Quản lý các chương trình giảm giá, khuyến mãi.", relations: [{ to: 'KhuyenMai_San_Pham', type: 'M:N' }] },
+                KhuyenMai_San_Pham: { name: 'KM_Sản phẩm', pos: { x: 55, y: 80 }, pk: '(MaKhuyenMai, MaSanPham)', fks: ['MaKhuyenMai', 'MaSanPham'], desc: "Bảng liên kết thể hiện khuyến mãi nào áp dụng cho sản phẩm nào.", relations: [] },
+            };
+
+            const schemaContainer = document.getElementById('schema-container');
+            const detailsContent = document.getElementById('details-content');
+            const canvas = document.getElementById('schema-canvas');
+            const ctx = canvas.getContext('2d');
+
+            function createEntityElement(id, entity) {
+                const el = document.createElement('div');
+                el.id = `entity-${id}`;
+                el.className = 'entity absolute bg-white p-2 rounded-lg shadow text-center text-sm md:text-base';
+                el.style.left = `${entity.pos.x}%`;
+                el.style.top = `${entity.pos.y}%`;
+                el.style.transform = 'translate(-50%, -50%)';
+                el.textContent = entity.name;
+                el.dataset.id = id;
+                schemaContainer.appendChild(el);
+                return el;
+            }
+
+            const entityElements = {};
+            for (const id in dbSchema) {
+                entityElements[id] = createEntityElement(id, dbSchema[id]);
+            }
+
+            function drawLines() {
+                const containerRect = schemaContainer.getBoundingClientRect();
+                canvas.width = containerRect.width;
+                canvas.height = containerRect.height;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (const id in dbSchema) {
+                    const fromEntity = dbSchema[id];
+                    const fromEl = entityElements[id];
+                    if (!fromEl) continue;
+
+                    const fromRect = fromEl.getBoundingClientRect();
+                    const from = {
+                        x: fromRect.left - containerRect.left + fromRect.width / 2,
+                        y: fromRect.top - containerRect.top + fromRect.height / 2,
+                    };
+
+                    fromEntity.relations.forEach(rel => {
+                        const toEl = entityElements[rel.to];
+                        if (!toEl) return;
+
+                        const toRect = toEl.getBoundingClientRect();
+                        const to = {
+                            x: toRect.left - containerRect.left + toRect.width / 2,
+                            y: toRect.top - containerRect.top + toRect.height / 2,
+                        };
+
+                        ctx.beginPath();
+                        ctx.moveTo(from.x, from.y);
+                        ctx.lineTo(to.x, to.y);
+
+                        const isHighlighted = fromEl.classList.contains('highlighted') || toEl.classList.contains('highlighted');
+                        ctx.strokeStyle = isHighlighted ? '#1E6091' : '#9CA3AF';
+                        ctx.lineWidth = isHighlighted ? 2 : 1;
+                        ctx.stroke();
+                    });
+                }
+            }
+
+            function updateEntityDetails(entityId) {
+                if (!entityId || !dbSchema[entityId]) {
+                    detailsContent.innerHTML = '<p>Chọn một thực thể trên sơ đồ để xem thông tin chi tiết tại đây.</p>';
+                    return;
+                }
+
+                const entity = dbSchema[entityId];
+                let fksHtml = entity.fks.length > 0 ? entity.fks.join(', ') : 'Không có';
+
+                detailsContent.innerHTML = `
+            <h4 class="text-xl font-bold mb-2">${entity.name}</h4>
+            <p class="mb-4 text-sm">${entity.desc}</p>
+            <div class="text-sm">
+                <p class="mb-2"><strong>Khóa chính (PK):</strong> <span class="font-mono bg-gray-100 px-1 rounded">${entity.pk}</span></p>
+                <p><strong>Khóa ngoại (FK):</strong> <span class="font-mono bg-gray-100 px-1 rounded">${fksHtml}</span></p>
+            </div>
+        `;
+            }
+
+            schemaContainer.addEventListener('click', e => {
+                if (e.target && e.target.classList.contains('entity')) {
+                    const entityId = e.target.dataset.id;
+
+                    document.querySelectorAll('.entity').forEach(el => el.classList.remove('selected'));
+                    e.target.classList.add('selected');
+
+                    updateEntityDetails(entityId);
+                }
+            });
+
+            schemaContainer.addEventListener('mouseover', e => {
+                if (e.target && e.target.classList.contains('entity')) {
+                    const entityId = e.target.dataset.id;
+                    const relatedIds = dbSchema[entityId].relations.map(r => r.to);
+                    relatedIds.push(entityId);
+
+                    // Highlight entities that relate to the hovered one
+                    for (const id in dbSchema) {
+                        dbSchema[id].relations.forEach(rel => {
+                            if (rel.to === entityId) relatedIds.push(id);
+                        });
+                    }
+
+                    document.querySelectorAll('.entity').forEach(el => {
+                        if (relatedIds.includes(el.dataset.id)) {
+                            el.classList.add('highlighted');
+                        } else {
+                            el.classList.remove('highlighted');
+                        }
+                    });
+                    drawLines();
+                }
+            });
+
+            schemaContainer.addEventListener('mouseout', () => {
+                document.querySelectorAll('.entity').forEach(el => el.classList.remove('highlighted'));
+                drawLines();
+            });
+
+            window.addEventListener('resize', drawLines);
+            drawLines();
+
+            const normBtns = document.querySelectorAll('.norm-btn');
+            const normContent = document.getElementById('norm-content');
+            const normData = {
+                0: {
+                    title: 'Bảng Dữ liệu Thô (Chưa chuẩn hóa)',
+                    desc: 'Đây là một ví dụ về bảng dữ liệu ban đầu, chứa nhiều vấn đề như thuộc tính đa trị (nhiều sản phẩm trên cùng một hàng) và phụ thuộc bắc cầu (Tên KH, Địa chỉ KH phụ thuộc vào Mã KH).',
+                    html: `
+                <table class="w-full normalization-table">
+                    <thead><tr><th>MaDonHang</th><th>MaKH</th><th>TenKH</th><th>DiaChiKH</th><th>NgayDat</th><th>SanPham (MaSP, TenSP, SoLuong, DonGia)</th></tr></thead>
+                    <tbody>
+                        <tr><td>DH01</td><td>KH01</td><td>Nguyễn Văn A</td><td>123 Đường X, Q1</td><td>15/06/2024</td><td>SP01, Sữa, 2, 15000; SP05, Bánh mì, 1, 5000</td></tr>
+                        <tr><td>DH02</td><td>KH02</td><td>Trần Thị B</td><td>456 Đường Y, Q3</td><td>16/06/2024</td><td>SP02, Trứng, 10, 25000</td></tr>
+                    </tbody>
+                </table>
+            `
+                },
+                1: {
+                    title: 'Dạng chuẩn 1 (1NF)',
+                    desc: 'Để đạt 1NF, chúng ta tách các thuộc tính đa trị. Mỗi sản phẩm trong một đơn hàng giờ đây là một hàng riêng biệt. Dữ liệu đã trở nên "nguyên tử".',
+                    html: `
+                <table class="w-full normalization-table">
+                    <thead><tr><th>MaDonHang</th><th>MaKH</th><th>TenKH</th><th>DiaChiKH</th><th>NgayDat</th><th>MaSP</th><th>TenSP</th><th>SoLuong</th><th>DonGia</th></tr></thead>
+                    <tbody>
+                        <tr><td>DH01</td><td>KH01</td><td>Nguyễn Văn A</td><td>123 Đường X, Q1</td><td>15/06/2024</td><td>SP01</td><td>Sữa</td><td>2</td><td>15000</td></tr>
+                        <tr><td>DH01</td><td>KH01</td><td>Nguyễn Văn A</td><td>123 Đường X, Q1</td><td>15/06/2024</td><td>SP05</td><td>Bánh mì</td><td>1</td><td>5000</td></tr>
+                        <tr><td>DH02</td><td>KH02</td><td>Trần Thị B</td><td>456 Đường Y, Q3</td><td>16/06/2024</td><td>SP02</td><td>Trứng</td><td>10</td><td>25000</td></tr>
+                    </tbody>
+                </table>
+            `
+                },
+                2: {
+                    title: 'Dạng chuẩn 2 (2NF)',
+                    desc: 'Để đạt 2NF, chúng ta loại bỏ các phụ thuộc một phần. `TenSP` chỉ phụ thuộc vào `MaSP`, không phải toàn bộ khóa chính (`MaDonHang`, `MaSP`). Vì vậy, chúng ta tách thông tin sản phẩm ra bảng riêng.',
+                    html: `
+                <p class="font-semibold mb-2">Bảng ChiTietDonHang (PK: MaDonHang, MaSP)</p>
+                <table class="w-full normalization-table mb-4">
+                    <thead><tr><th>MaDonHang</th><th>MaSP</th><th>SoLuong</th><th>DonGia</th></tr></thead>
+                    <tbody>
+                        <tr><td>DH01</td><td>SP01</td><td>2</td><td>15000</td></tr>
+                        <tr><td>DH01</td><td>SP05</td><td>1</td><td>5000</td></tr>
+                        <tr><td>DH02</td><td>SP02</td><td>10</td><td>25000</td></tr>
+                    </tbody>
+                </table>
+                <p class="font-semibold mb-2">Bảng SanPham (PK: MaSP)</p>
+                <table class="w-full normalization-table">
+                    <thead><tr><th>MaSP</th><th>TenSP</th></tr></thead>
+                    <tbody>
+                        <tr><td>SP01</td><td>Sữa</td></tr>
+                        <tr><td>SP05</td><td>Bánh mì</td></tr>
+                        <tr><td>SP02</td><td>Trứng</td></tr>
+                    </tbody>
+                </table>
+                 <p class="text-sm mt-2 text-gray-500">Bảng đơn hàng vẫn còn dữ liệu dư thừa của khách hàng.</p>
+            `
+                },
+                3: {
+                    title: 'Dạng chuẩn 3 (3NF)',
+                    desc: 'Để đạt 3NF, chúng ta loại bỏ các phụ thuộc bắc cầu. `TenKH` và `DiaChiKH` phụ thuộc vào `MaKH`, là một thuộc tính không khóa. Chúng ta tách thông tin khách hàng và đơn hàng ra các bảng riêng.',
+                    html: `
+                <p class="font-semibold mb-2">Bảng DonHang (PK: MaDonHang)</p>
+                <table class="w-full normalization-table mb-4"><thead><tr><th>MaDonHang</th><th>MaKH</th><th>NgayDat</th></tr></thead>
+                    <tbody><tr><td>DH01</td><td>KH01</td><td>15/06/2024</td></tr><tr><td>DH02</td><td>KH02</td><td>16/06/2024</td></tr></tbody>
+                </table>
+                <p class="font-semibold mb-2">Bảng KhachHang (PK: MaKH)</p>
+                <table class="w-full normalization-table"><thead><tr><th>MaKH</th><th>TenKH</th><th>DiaChiKH</th></tr></thead>
+                    <tbody><tr><td>KH01</td><td>Nguyễn Văn A</td><td>123 Đường X, Q1</td></tr><tr><td>KH02</td><td>Trần Thị B</td><td>456 Đường Y, Q3</td></tr></tbody>
+                </table>
+                 <p class="text-sm mt-2 text-green-600">Các bảng ChiTietDonHang và SanPham từ 2NF vẫn giữ nguyên. Dữ liệu giờ đã được chuẩn hóa, giảm thiểu dư thừa.</p>
+            `
+                }
+            };
+
+            function showNormContent(normLevel) {
+                const data = normData[normLevel];
+                normContent.innerHTML = `
+            <div class="text-center mb-4">
+                <h4 class="text-xl font-bold text-[#184E77]">${data.title}</h4>
+                <p class="text-sm text-gray-600 mt-2 max-w-2xl mx-auto">${data.desc}</p>
+            </div>
+            <div class="overflow-x-auto">${data.html}</div>
+        `;
+                normBtns.forEach(btn => {
+                    if (btn.dataset.norm === normLevel) {
+                        btn.classList.remove('bg-gray-200', 'text-gray-800');
+                        btn.classList.add('bg-[#1E6091]', 'text-white');
+                    } else {
+                        btn.classList.add('bg-gray-200', 'text-gray-800');
+                        btn.classList.remove('bg-[#1E6091]', 'text-white');
+                    }
+                });
+            }
+
+            normBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showNormContent(btn.dataset.norm);
+                });
+            });
+
+            showNormContent('0');
+
+            const accordionItems = document.querySelectorAll('.req-accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.req-accordion-header');
+                const content = item.querySelector('.req-accordion-content');
+                const icon = header.querySelector('span');
+
+                header.addEventListener('click', () => {
+                    const isVisible = !content.classList.contains('hidden');
+                    if (isVisible) {
+                        content.classList.add('hidden');
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.classList.remove('hidden');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // Smooth scrolling for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    if (mobileMenu.classList.contains('hidden') === false) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

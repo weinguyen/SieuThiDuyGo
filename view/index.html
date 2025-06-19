@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siêu Thị Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Siêu Thị Online</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="user-actions">
+                <div class="cart" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                <div class="user" id="user-menu">
+                    <i class="fas fa-user"></i>
+                    <div class="user-dropdown">
+                        <a href="#" id="login-btn">Đăng nhập</a>
+                        <a href="#" id="register-btn">Đăng ký</a>
+                        <a href="#" id="logout-btn" style="display: none;">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="category-nav">
+        <div class="container">
+            <ul id="categories-list">
+                <!-- Categories will be loaded here -->
+                <li class="loading">Đang tải danh mục...</li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <section class="products" id="products-container">
+                <h2>Sản Phẩm</h2>
+                <div class="products-grid" id="products-grid">
+                    <!-- Products will be loaded here -->
+                    <div class="loading">Đang tải sản phẩm...</div>
+                </div>
+                <div class="pagination">
+                    <button id="prev-page" disabled>Trang trước</button>
+                    <span id="current-page">1</span>
+
+                    <button id="next-page">Trang sau</button>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Đăng Nhập</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Mật khẩu</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Đăng Ký</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-ho">Họ</label>
+                    <input type="text" id="register-ho" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-ten">Tên</label>
+                    <input type="text" id="register-ten" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Mật khẩu</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-sdt">Số điện thoại</label>
+                    <input type="tel" id="register-sdt" required>
+                </div>
+                <button type="submit" class="btn">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Giỏ Hàng</h2>
+            <div id="cart-items">
+                <!-- Cart items will be loaded here -->
+                <p class="empty-cart">Giỏ hàng trống</p>
+            </div>
+            <div class="cart-total">
+                <p>Tổng cộng: <span id="cart-total-price">0</span>đ</p>
+                <button id="checkout-btn" class="btn">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về Chúng Tôi</h3>
+                    <p>Siêu Thị Online cung cấp các sản phẩm chất lượng cao với giá cả hợp lý.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liên Hệ</h3>
+                    <p><i class="fas fa-phone"></i> 0123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@sieuthi.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Theo Dõi</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Siêu Thị Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
