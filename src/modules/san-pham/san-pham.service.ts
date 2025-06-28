@@ -61,11 +61,18 @@ export class SanPhamService {
     sanPham.soLuongDaBan = 0;
     sanPham.nhanVien = nhanVien;
     sanPham.danhMuc = danhMuc;
+    const savedSanPham = await this.sanPhamRepository.save(sanPham);
     if (createSanPhamDto.hinhAnhs && createSanPhamDto.hinhAnhs.length > 0) {
-      sanPham.hinhAnhs = createSanPhamDto.hinhAnhs;
+      const savehinhAnhs = createSanPhamDto.hinhAnhs.map((hinhAnh) => {
+        const newHinhAnh = new HinhAnhSanPham();
+        newHinhAnh.hinhAnh = hinhAnh;
+        newHinhAnh.sanPham = sanPham;
+        return this.hinhAnhRepository.save(newHinhAnh);
+      });
+      await Promise.all(savehinhAnhs);
     }
 
-    return await this.sanPhamRepository.save(sanPham);
+    return this.findOne(savedSanPham.id);
   }
 
   async findAll(): Promise<SanPham[]> {
@@ -75,6 +82,11 @@ export class SanPhamService {
         danhMuc: true,
         hinhAnhs: true,
         danhGias: true,
+      },
+      select: {
+        nhanVien: {
+          tenNhanVien: true,
+        },
       },
     });
   }
@@ -153,16 +165,6 @@ export class SanPhamService {
         );
       }
       sanPham.danhMuc = danhMuc;
-    }
-
-    if (updateSanPhamDto.hinhAnhs) {
-      await this.hinhAnhRepository.delete({ sanPham: { id } });
-
-      sanPham.hinhAnhs = updateSanPhamDto.hinhAnhs.map((hinhAnhDto) => {
-        const hinhAnh = new HinhAnhSanPham();
-        hinhAnh.hinhAnh = hinhAnhDto.hinhAnh;
-        return hinhAnh;
-      });
     }
 
     return await this.sanPhamRepository.save(sanPham);

@@ -6,6 +6,7 @@ import { HinhAnhSanPham } from '../entities/hinh-anh.entity';
 export class CreateSanPhamDto extends OmitType(SanPham, [
   'id',
   'soLuongDaBan',
+  'hinhAnhs',
 ]) {
   @ApiProperty({ description: 'ID của danh mục sản phẩm' })
   @IsNumber()
@@ -17,5 +18,5 @@ export class CreateSanPhamDto extends OmitType(SanPham, [
   })
   @IsOptional()
   @IsArray()
-  hinhAnhs: HinhAnhSanPham[];
+  hinhAnhs: string[];
 }

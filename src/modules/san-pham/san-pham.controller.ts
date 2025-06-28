@@ -120,7 +120,6 @@ export class SanPhamController {
     return this.sanPhamService.findOne(+id);
   }
 
-  @Roles(UserRole.ADMIN, UserRole.NHANVIEN)
   @Delete(':id')
   @ApiOperation({
     summary: 'Xóa sản phẩm',

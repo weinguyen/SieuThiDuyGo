@@ -27,7 +27,9 @@ export class NhanVienService {
   }
 
   async findAll(): Promise<NhanVien[]> {
-    return await this.nhanVienRepository.find();
+    return await this.nhanVienRepository.find({
+      relations: ['taiKhoan'],
+    });
   }
 
   async findOne(id: number): Promise<NhanVien | null> {

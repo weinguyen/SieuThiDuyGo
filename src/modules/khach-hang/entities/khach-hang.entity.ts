@@ -27,7 +27,10 @@ export class KhachHang {
   @ApiProperty()
   @IsString()
   sdt: string;
-  @OneToOne(() => TaiKhoan, (taiKhoan) => taiKhoan.khachHang, { cascade: true })
+  @OneToOne(() => TaiKhoan, (taiKhoan) => taiKhoan.khachHang, {
+    cascade: true,
+    onDelete: 'SET NULL',
+  })
   @JoinColumn()
   taiKhoan: TaiKhoan;
   @OneToMany(() => DonHang, (donHang) => donHang.khachHang)

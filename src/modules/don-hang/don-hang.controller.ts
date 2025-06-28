@@ -10,13 +10,18 @@ import {
 } from '@nestjs/common';
 import { DonHangService } from './don-hang.service';
 import { RolesGuard } from 'src/common/guards/role.guard';
-import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { UserRole } from 'src/common/constants/constants';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { CurrentAccount } from 'src/common/decorators/account.decorator';
 import { AddToCartDto } from './dto/addtocard.dto';
 import { CheckoutCartDto } from './dto/checkoutcard.dto';
-
+@ApiBearerAuth()
 @Controller('don-hang')
 export class DonHangController {
   constructor(private readonly donHangService: DonHangService) {}

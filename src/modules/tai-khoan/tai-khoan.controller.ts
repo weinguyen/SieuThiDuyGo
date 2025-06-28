@@ -10,7 +10,8 @@ import {
 import { TaiKhoanService } from './tai-khoan.service';
 import { UpdateTaiKhoanDto } from './dto/update-tai-khoan.dto';
 import { Public } from 'src/common/decorators/public.decorator';
-
+import { ApiBearerAuth } from '@nestjs/swagger';
+@ApiBearerAuth()
 @Controller('taikhoan')
 export class TaiKhoanController {
   constructor(private readonly taiKhoanService: TaiKhoanService) {}
