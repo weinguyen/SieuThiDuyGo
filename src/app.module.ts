@@ -34,6 +34,9 @@ import { DonHangModule } from './modules/don-hang/don-hang.module';
         database: config.get<string>('DB_NAME'),
         autoLoadEntities: true,
         synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
     }),
     AuthModule,
