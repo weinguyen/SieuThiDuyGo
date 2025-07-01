@@ -60,7 +60,7 @@ export class SanPhamController {
   findAll() {
     return this.sanPhamService.findAll();
   }
-
+  @Public()
   @Get('page/:stt')
   @ApiOperation({
     summary: 'Lấy sản phẩm theo trang',
@@ -74,7 +74,7 @@ export class SanPhamController {
   findByPage(@Param('stt') stt: string) {
     return this.sanPhamService.findByPage(+stt);
   }
-
+  @Public()
   @Get('search')
   @ApiOperation({
     summary: 'Tìm kiếm sản phẩm theo tên',
@@ -103,7 +103,7 @@ export class SanPhamController {
   findByDanhMuc(@Param('danhMucId') danhMucId: string) {
     return this.sanPhamService.findByDanhMuc(+danhMucId);
   }
-
+  @Public()
   @Get(':id')
   @ApiOperation({
     summary: 'Lấy thông tin chi tiết sản phẩm',

@@ -6,7 +6,7 @@ import {
 import { CreateSanPhamDto } from './dto/create-sanpham.dto';
 import { UpdateSanPhamDto } from './dto/update-sanpham.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { SanPham } from './entities/san-pham.entity';
 import { HinhAnhSanPham } from './entities/hinh-anh.entity';
 import { NhanVien } from '../nhan-vien/entities/nhan-vien.entity';
@@ -177,9 +177,10 @@ export class SanPhamService {
 
   async findByName(ten: string): Promise<SanPham[]> {
     return await this.sanPhamRepository.find({
-      where: {
-        ten: ten,
-      },
+      where: [
+        { ten: ILike(`%${ten}%`) }, // Tìm trong tên sản phẩm
+        { moTa: ILike(`%${ten}%`) }, // Tìm trong mô tả sản phẩm
+      ],
       relations: {
         nhanVien: true,
         danhMuc: true,
