@@ -8,11 +8,12 @@ export class DanhMuc {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'text', nullable: true })
   @ApiProperty({ description: 'Tên danh mục' })
   @IsString()
   tenDanhMuc: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   @ApiProperty({ description: 'Mô tả danh mục', required: true })
   @IsString()
   moTa: string;
