@@ -131,4 +131,24 @@ export class SanPhamController {
   remove(@Param('id') id: string) {
     return this.sanPhamService.remove(+id);
   }
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Cập nhật sản phẩm',
+    description: 'Cập nhật thông tin sản phẩm theo ID',
+  })
+  @ApiParam({ name: 'id', description: 'ID sản phẩm cần cập nhật', example: 1 })
+  @ApiResponse({ status: 200, description: 'Cập nhật sản phẩm thành công' })
+  @ApiResponse({ status: 400, description: 'Dữ liệu đầu vào không hợp lệ' })
+  @ApiResponse({ status: 404, description: 'Không tìm thấy sản phẩm' })
+  @ApiResponse({
+    status: 403,
+    description: 'Không có quyền cập nhật sản phẩm này',
+  })
+  update(
+    @Param('id') id: string,
+    @Body() updateSanPhamDto: UpdateSanPhamDto,
+    @CurrentAccount() account: any,
+  ) {
+    return this.sanPhamService.update(+id, updateSanPhamDto, account);
+  }
 }

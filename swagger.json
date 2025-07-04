@@ -219,6 +219,55 @@
         "tags": [
           "Sản phẩm"
         ]
+      },
+      "patch": {
+        "description": "Cập nhật thông tin sản phẩm theo ID",
+        "operationId": "SanPhamController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm cần cập nhật",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSanPhamDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cập nhật sản phẩm thành công"
+          },
+          "400": {
+            "description": "Dữ liệu đầu vào không hợp lệ"
+          },
+          "403": {
+            "description": "Không có quyền cập nhật sản phẩm này"
+          },
+          "404": {
+            "description": "Không tìm thấy sản phẩm"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cập nhật sản phẩm",
+        "tags": [
+          "Sản phẩm"
+        ]
       }
     },
     "/auth/login": {
@@ -1234,6 +1283,10 @@
           "gia",
           "danhMucId"
         ]
+      },
+      "UpdateSanPhamDto": {
+        "type": "object",
+        "properties": {}
       },
       "LoginDto": {
         "type": "object",
