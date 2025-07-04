@@ -1284,7 +1284,39 @@
       },
       "UpdateSanPhamDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "ten": {
+            "type": "string"
+          },
+          "soLuongHienCon": {
+            "type": "number"
+          },
+          "hanSuDung": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ngaySanXuat": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "moTa": {
+            "type": "string"
+          },
+          "gia": {
+            "type": "number"
+          },
+          "danhMucId": {
+            "type": "number",
+            "description": "ID của danh mục sản phẩm"
+          },
+          "hinhAnhs": {
+            "description": "Danh sách hình ảnh sản phẩm",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "LoginDto": {
         "type": "object",
