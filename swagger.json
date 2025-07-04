@@ -449,12 +449,12 @@
         ]
       }
     },
-    "/danh-muc/{tendanhmuc}": {
+    "/danh-muc/{id}": {
       "get": {
         "operationId": "DanhMucController_findOne",
         "parameters": [
           {
-            "name": "tendanhmuc",
+            "name": "id",
             "required": true,
             "in": "path",
             "schema": {
@@ -475,9 +475,7 @@
         "tags": [
           "DanhMuc"
         ]
-      }
-    },
-    "/danh-muc/{id}": {
+      },
       "patch": {
         "operationId": "DanhMucController_update",
         "parameters": [

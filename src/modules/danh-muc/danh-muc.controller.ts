@@ -27,9 +27,9 @@ export class DanhMucController {
     return this.danhMucService.findAll();
   }
   @Public()
-  @Get(':tendanhmuc')
-  findOne(@Param('tendanhmuc') ten: string) {
-    return this.danhMucService.findOne(ten);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.danhMucService.findOne(+id);
   }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDanhMucDto: UpdateDanhMucDto) {
