@@ -33,6 +33,7 @@ export class KhachHang {
   })
   @JoinColumn()
   taiKhoan: TaiKhoan;
+  taiKhoanId: number;
   @OneToMany(() => DonHang, (donHang) => donHang.khachHang)
   donHangs: DonHang[];
   @OneToMany(() => ThongTinLienHe, (thongTinLienHe) => thongTinLienHe.khachHang)

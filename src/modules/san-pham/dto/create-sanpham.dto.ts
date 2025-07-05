@@ -7,6 +7,7 @@ export class CreateSanPhamDto extends OmitType(SanPham, [
   'id',
   'soLuongDaBan',
   'hinhAnhs',
+  'khuyenMais',
 ]) {
   @ApiProperty({ description: 'ID của danh mục sản phẩm' })
   @IsNumber()

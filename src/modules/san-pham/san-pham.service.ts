@@ -149,7 +149,7 @@ export class SanPhamService {
     Object.assign(sanPham, updateSanPhamDto);
 
     const nhanVien = await this.nhanVienRepository.findOne({
-      where: { id: account.id },
+      where: { taiKhoan: { id: account.id } },
     });
     if (!nhanVien) {
       throw new NotFoundException(

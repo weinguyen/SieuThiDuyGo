@@ -41,6 +41,7 @@ export class NhanVien {
   })
   @JoinColumn({ name: 'taiKhoanId' })
   taiKhoan: TaiKhoan;
+  taiKhoanId: number;
 
   @OneToMany(() => SanPham, (sanPham) => sanPham.nhanVien)
   sanPhams: SanPham[];

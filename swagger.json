@@ -1373,58 +1373,6 @@
       }
     },
     "schemas": {
-      "KhuyenMai": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number",
-            "description": "Mã khuyến mãi (Primary Key)"
-          },
-          "phanTramGiam": {
-            "type": "number",
-            "description": "Phần trăm giảm (0-100)",
-            "example": 15.5,
-            "minimum": 0,
-            "maximum": 100
-          },
-          "moTa": {
-            "type": "string",
-            "description": "Mô tả khuyến mãi",
-            "example": "Giảm giá 20% cho tất cả sản phẩm điện thoại"
-          },
-          "ngayBatDau": {
-            "type": "string",
-            "description": "Ngày bắt đầu khuyến mãi",
-            "format": "date",
-            "example": "2024-01-01"
-          },
-          "ngayKetThuc": {
-            "type": "string",
-            "description": "Ngày kết thúc khuyến mãi",
-            "format": "date",
-            "example": "2024-01-31"
-          },
-          "ngayTao": {
-            "format": "date-time",
-            "type": "string",
-            "description": "Ngày tạo bản ghi"
-          },
-          "ngayCapNhat": {
-            "format": "date-time",
-            "type": "string",
-            "description": "Ngày cập nhật cuối"
-          }
-        },
-        "required": [
-          "id",
-          "phanTramGiam",
-          "moTa",
-          "ngayBatDau",
-          "ngayKetThuc",
-          "ngayTao",
-          "ngayCapNhat"
-        ]
-      },
       "CreateSanPhamDto": {
         "type": "object",
         "properties": {
@@ -1448,13 +1396,6 @@
           "gia": {
             "type": "number"
           },
-          "khuyenMais": {
-            "description": "Danh sách khuyến mãi áp dụng",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/KhuyenMai"
-            }
-          },
           "danhMucId": {
             "type": "number",
             "description": "ID của danh mục sản phẩm"
@@ -1474,7 +1415,6 @@
           "ngaySanXuat",
           "moTa",
           "gia",
-          "khuyenMais",
           "danhMucId"
         ]
       },
@@ -1500,13 +1440,6 @@
           },
           "gia": {
             "type": "number"
-          },
-          "khuyenMais": {
-            "description": "Danh sách khuyến mãi áp dụng",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/KhuyenMai"
-            }
           },
           "danhMucId": {
             "type": "number",
