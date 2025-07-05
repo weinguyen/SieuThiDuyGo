@@ -82,6 +82,7 @@ export class SanPhamService {
         danhMuc: true,
         hinhAnhs: true,
         danhGias: true,
+        khuyenMais: true,
       },
       select: {
         nhanVien: {
@@ -106,6 +107,7 @@ export class SanPhamService {
         danhMuc: true,
         hinhAnhs: true,
         danhGias: true,
+        khuyenMais: true,
       },
       take: limit,
       skip: skip,
@@ -127,6 +129,7 @@ export class SanPhamService {
         danhMuc: true,
         hinhAnhs: true,
         danhGias: true,
+        khuyenMais: true,
       },
     });
 

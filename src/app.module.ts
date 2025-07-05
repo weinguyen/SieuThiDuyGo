@@ -16,6 +16,7 @@ import { ThongTinLienHeModule } from './modules/thong-tin-lien-he/thong-tin-lien
 import { KhachHangModule } from './modules/khach-hang/khach-hang.module';
 import { DonHang } from './modules/don-hang/entities/don-hang.entity';
 import { DonHangModule } from './modules/don-hang/don-hang.module';
+import { KhuyenMaiModule } from './modules/khuyen_mai/khuyen_mai.module';
 @Module({
   imports: [
     SanPhamModule,
@@ -49,6 +50,7 @@ import { DonHangModule } from './modules/don-hang/don-hang.module';
     KhachHangModule,
     DonHangModule,
     ChiTietDonHangModule,
+    KhuyenMaiModule,
   ],
   providers: [
     {

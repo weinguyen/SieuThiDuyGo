@@ -7,6 +7,7 @@ import { HinhAnhSanPham } from './entities/hinh-anh.entity';
 import { NhanVien } from '../nhan-vien/entities/nhan-vien.entity';
 import { DanhMuc } from '../danh-muc/entities/danh-muc.entity';
 import { ChiTietDonHang } from '../chi-tiet-don-hang/entities/chi-tiet-don-hang.entity';
+import { KhuyenMai } from '../khuyen_mai/entities/khuyen_mai.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ChiTietDonHang } from '../chi-tiet-don-hang/entities/chi-tiet-don-hang.
       NhanVien,
       DanhMuc,
       ChiTietDonHang,
+      KhuyenMai,
     ]),
   ],
   controllers: [SanPhamController],

@@ -5,6 +5,7 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { IsNumber, IsString, IsDate } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -14,6 +15,7 @@ import { DanhMuc } from '../../danh-muc/entities/danh-muc.entity';
 import { DanhGia } from '../../danh-gia/entities/danh-gia.entity';
 import { HinhAnhSanPham } from './hinh-anh.entity';
 import { ChiTietDonHang } from '../../chi-tiet-don-hang/entities/chi-tiet-don-hang.entity';
+import { KhuyenMai } from 'src/modules/khuyen_mai/entities/khuyen_mai.entity';
 
 @Entity('san_pham')
 export class SanPham {
@@ -77,4 +79,10 @@ export class SanPham {
     cascade: true,
   })
   chiTietDonHangs: ChiTietDonHang[];
+  @ManyToMany(() => KhuyenMai, (khuyenMai) => khuyenMai.sanPhams)
+  @ApiProperty({
+    type: () => [KhuyenMai],
+    description: 'Danh sách khuyến mãi áp dụng',
+  })
+  khuyenMais: KhuyenMai[];
 }
