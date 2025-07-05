@@ -11,6 +11,7 @@ import { KhuyenMaiService } from './khuyen_mai.service';
 import { CreateKhuyenMaiDto } from './dto/create-khuyen_mai.dto';
 import { UpdateKhuyenMaiDto } from './dto/update-khuyen_mai.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { Public } from 'src/common/decorators/public.decorator';
 @ApiBearerAuth()
 @Controller('khuyen-mai')
 export class KhuyenMaiController {
@@ -20,12 +21,12 @@ export class KhuyenMaiController {
   create(@Body() createKhuyenMaiDto: CreateKhuyenMaiDto) {
     return this.khuyenMaiService.create(createKhuyenMaiDto);
   }
-
+  @Public()
   @Get()
   findAll() {
     return this.khuyenMaiService.findAll();
   }
-
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.khuyenMaiService.findOne(+id);

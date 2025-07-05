@@ -34,7 +34,9 @@ export class DanhGia {
   @ApiProperty({ description: 'Ngày đánh giá' })
   ngayDanhGia: Date;
 
-  @ManyToOne(() => KhachHang, (khachHang) => khachHang.danhGias)
+  @ManyToOne(() => KhachHang, (khachHang) => khachHang.danhGias, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'khachHangId' })
   @ApiProperty({ description: 'Khách hàng đánh giá' })
   khachHang: KhachHang;
