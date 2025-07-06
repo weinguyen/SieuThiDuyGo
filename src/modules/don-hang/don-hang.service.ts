@@ -295,6 +295,7 @@ export class DonHangService {
 
     const donHangGioHang = await this.donHangRepository.findOne({
       where: {
+        id: checkoutCartDto.id,
         khachHang: { id: khachHang.id },
         trangThaiDonHang: TrangThaiDonHang.CHO_XAC_NHAN,
       },

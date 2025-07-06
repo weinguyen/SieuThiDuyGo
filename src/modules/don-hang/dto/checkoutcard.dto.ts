@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 import { PhuongThucThanhToan } from '../common/constant';
 import { DonHang } from '../entities/don-hang.entity';
 
-export class CheckoutCartDto extends OmitType(DonHang, ['id', 'tongTien']) {
+export class CheckoutCartDto extends OmitType(DonHang, ['tongTien']) {
   @IsString()
   @ApiProperty({ description: 'Địa chỉ giao hàng' })
   diaChiGiaoHang: string;

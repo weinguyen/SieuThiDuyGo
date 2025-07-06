@@ -1349,6 +1349,206 @@
           "KhuyenMai"
         ]
       }
+    },
+    "/lich-su-kho-hang": {
+      "post": {
+        "description": "Ghi lại giao dịch nhập/xuất/điều chỉnh kho hàng",
+        "operationId": "LichSuKhoHangController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLichSuKhoHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Giao dịch kho được tạo thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LichSuKhoHang"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ hoặc không đủ hàng"
+          },
+          "404": {
+            "description": "Sản phẩm không tồn tại"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tạo giao dịch kho mới",
+        "tags": [
+          "Lịch sử kho hàng"
+        ]
+      },
+      "get": {
+        "description": "Trả về danh sách tất cả giao dịch kho",
+        "operationId": "LichSuKhoHangController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Danh sách lịch sử kho",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LichSuKhoHang"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy tất cả lịch sử kho",
+        "tags": [
+          "Lịch sử kho hàng"
+        ]
+      }
+    },
+    "/lich-su-kho-hang/san-pham/{id}": {
+      "get": {
+        "description": "Trả về lịch sử nhập/xuất kho của một sản phẩm cụ thể",
+        "operationId": "LichSuKhoHangController_findBySanPham",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID sản phẩm",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lịch sử kho của sản phẩm",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LichSuKhoHang"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sản phẩm không tồn tại"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy lịch sử kho theo sản phẩm",
+        "tags": [
+          "Lịch sử kho hàng"
+        ]
+      }
+    },
+    "/lich-su-kho-hang/bao-cao/thong-ke": {
+      "get": {
+        "description": "Báo cáo thống kê giao dịch kho theo thời gian",
+        "operationId": "LichSuKhoHangController_getThongKeKho",
+        "parameters": [
+          {
+            "name": "startDate",
+            "required": false,
+            "in": "query",
+            "description": "Ngày bắt đầu (YYYY-MM-DD)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "required": false,
+            "in": "query",
+            "description": "Ngày kết thúc (YYYY-MM-DD)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Báo cáo thống kê kho hàng"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Thống kê kho hàng",
+        "tags": [
+          "Lịch sử kho hàng"
+        ]
+      }
+    },
+    "/lich-su-kho-hang/{id}": {
+      "get": {
+        "description": "Trả về thông tin chi tiết của một giao dịch kho",
+        "operationId": "LichSuKhoHangController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID giao dịch kho",
+            "schema": {
+              "example": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chi tiết giao dịch kho",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LichSuKhoHang"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Giao dịch kho không tồn tại"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Lấy chi tiết giao dịch kho",
+        "tags": [
+          "Lịch sử kho hàng"
+        ]
+      }
     }
   },
   "info": {
@@ -1622,6 +1822,9 @@
       "CheckoutCartDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "number"
+          },
           "tenDonHang": {
             "type": "string"
           },
@@ -1660,6 +1863,7 @@
           }
         },
         "required": [
+          "id",
           "tenDonHang",
           "ngayChuanBiHang",
           "ngayNhanHang",
@@ -1759,6 +1963,90 @@
             }
           }
         }
+      },
+      "CreateLichSuKhoHangDto": {
+        "type": "object",
+        "properties": {
+          "sanPhamId": {
+            "type": "number",
+            "description": "Mã sản phẩm",
+            "example": 1
+          },
+          "loaiGiaoDich": {
+            "type": "string",
+            "description": "Loại giao dịch",
+            "enum": [
+              "nhap_kho",
+              "xuat_kho",
+              "dieu_chinh",
+              "tra_hang",
+              "huy_hang"
+            ],
+            "example": "nhap_kho"
+          },
+          "soLuongThayDoi": {
+            "type": "number",
+            "description": "Số lượng thay đổi",
+            "example": 10,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "sanPhamId",
+          "loaiGiaoDich",
+          "soLuongThayDoi"
+        ]
+      },
+      "LichSuKhoHang": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Mã lịch sử (PK)"
+          },
+          "sanPhamId": {
+            "type": "number",
+            "description": "Mã sản phẩm (FK)"
+          },
+          "loaiGiaoDich": {
+            "type": "string",
+            "description": "Loại giao dịch",
+            "enum": [
+              "nhap_kho",
+              "xuat_kho",
+              "dieu_chinh",
+              "tra_hang",
+              "huy_hang"
+            ],
+            "example": "nhap_kho"
+          },
+          "soLuongThayDoi": {
+            "type": "number",
+            "description": "Số lượng thay đổi"
+          },
+          "tonKhoSauCung": {
+            "type": "number",
+            "description": "Tồn kho sau khi thực hiện giao dịch",
+            "example": 150
+          },
+          "ngayThucHien": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Ngày thực hiện"
+          },
+          "nhanVienId": {
+            "type": "number",
+            "description": "Mã nhân viên (FK) - người thực hiện"
+          }
+        },
+        "required": [
+          "id",
+          "sanPhamId",
+          "loaiGiaoDich",
+          "soLuongThayDoi",
+          "tonKhoSauCung",
+          "ngayThucHien"
+        ]
       }
     }
   }

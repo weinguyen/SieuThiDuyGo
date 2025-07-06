@@ -17,6 +17,7 @@ import { KhachHangModule } from './modules/khach-hang/khach-hang.module';
 import { DonHang } from './modules/don-hang/entities/don-hang.entity';
 import { DonHangModule } from './modules/don-hang/don-hang.module';
 import { KhuyenMaiModule } from './modules/khuyen_mai/khuyen_mai.module';
+import { LichSuKhoHangModule } from './modules/lich_su_kho_hang/lich_su_kho_hang.module';
 @Module({
   imports: [
     SanPhamModule,
@@ -51,16 +52,16 @@ import { KhuyenMaiModule } from './modules/khuyen_mai/khuyen_mai.module';
     DonHangModule,
     ChiTietDonHangModule,
     KhuyenMaiModule,
+    LichSuKhoHangModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
-      useClass: RolesGuard,
+      useClass: AuthGuard,
     },
-
     {
       provide: APP_GUARD,
-      useClass: AuthGuard,
+      useClass: RolesGuard,
     },
   ],
 })
