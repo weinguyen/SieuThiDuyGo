@@ -6,10 +6,17 @@ import { ChiTietDonHang } from '../chi-tiet-don-hang/entities/chi-tiet-don-hang.
 import { KhachHang } from '../khach-hang/entities/khach-hang.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SanPham } from '../san-pham/entities/san-pham.entity';
+import { NhanVien } from '../nhan-vien/entities/nhan-vien.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([DonHang, ChiTietDonHang, KhachHang, SanPham]),
+    TypeOrmModule.forFeature([
+      DonHang,
+      ChiTietDonHang,
+      KhachHang,
+      SanPham,
+      NhanVien,
+    ]),
   ],
   controllers: [DonHangController],
   providers: [DonHangService],

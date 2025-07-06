@@ -29,6 +29,8 @@ export class DonHangService {
     private readonly khachHangRepository: Repository<KhachHang>,
     @InjectRepository(SanPham)
     private readonly sanPhamRepository: Repository<SanPham>,
+    @InjectRepository(NhanVien)
+    private readonly nhanVienRepository: Repository<NhanVien>,
   ) {}
   async addToCart(
     accountId: number,
@@ -365,7 +367,7 @@ export class DonHangService {
     createDonHangDto: CreateDonHangDto,
     account: any,
   ): Promise<DonHang> {
-    await this.khachHangRepository.findOne({
+    await this.nhanVienRepository.findOne({
       where: { taiKhoan: { id: account.id } },
     });
 
@@ -377,7 +379,9 @@ export class DonHangService {
   }
 
   findAll() {
-    return `This action returns all donHang`;
+    return this.donHangRepository.find({
+      relations: ['khachHang', 'chiTietDonHangs', 'thongTinLienHe'],
+    });
   }
 
   findOne(id: number): Promise<DonHang | null> {
