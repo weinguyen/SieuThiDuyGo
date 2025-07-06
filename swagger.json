@@ -1937,9 +1937,103 @@
           "ghiChu"
         ]
       },
+      "ChiTietDonHangDto": {
+        "type": "object",
+        "properties": {
+          "sanPhamId": {
+            "type": "number",
+            "description": "ID sản phẩm",
+            "example": 1
+          },
+          "soLuong": {
+            "type": "number",
+            "description": "Số lượng",
+            "example": 2
+          }
+        },
+        "required": [
+          "sanPhamId",
+          "soLuong"
+        ]
+      },
       "CreateDonHangDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "khachHangId": {
+            "type": "number",
+            "description": "ID khách hàng",
+            "example": 1
+          },
+          "tenDonHang": {
+            "type": "string",
+            "description": "Tên đơn hàng",
+            "example": "Đơn hàng #001"
+          },
+          "phuongThucThanhToan": {
+            "type": "string",
+            "description": "Phương thức thanh toán",
+            "enum": [
+              "Banking",
+              "Cod"
+            ],
+            "example": "Cod"
+          },
+          "ngayChuanBiHang": {
+            "type": "string",
+            "description": "Ngày chuẩn bị hàng",
+            "format": "date",
+            "example": "2024-01-15"
+          },
+          "ngayNhanHang": {
+            "type": "string",
+            "description": "Ngày nhận hàng dự kiến",
+            "format": "date",
+            "example": "2024-01-17"
+          },
+          "donViVanChuyen": {
+            "type": "string",
+            "description": "Đơn vị vận chuyển",
+            "example": "Giao hàng nhanh"
+          },
+          "chiTietDonHangs": {
+            "description": "Danh sách sản phẩm",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChiTietDonHangDto"
+            }
+          },
+          "tenNguoiNhan": {
+            "type": "string",
+            "description": "Tên người nhận",
+            "example": "Nguyễn Văn A"
+          },
+          "sdtNguoiNhan": {
+            "type": "string",
+            "description": "Số điện thoại",
+            "example": "0123456789"
+          },
+          "diaChiGiaoHang": {
+            "type": "string",
+            "description": "Địa chỉ giao hàng",
+            "example": "123 Đường ABC"
+          },
+          "ghiChu": {
+            "type": "string",
+            "description": "Ghi chú"
+          }
+        },
+        "required": [
+          "khachHangId",
+          "tenDonHang",
+          "phuongThucThanhToan",
+          "ngayChuanBiHang",
+          "ngayNhanHang",
+          "donViVanChuyen",
+          "chiTietDonHangs",
+          "tenNguoiNhan",
+          "sdtNguoiNhan",
+          "diaChiGiaoHang"
+        ]
       },
       "DonHang": {
         "type": "object",

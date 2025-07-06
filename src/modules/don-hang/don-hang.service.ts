@@ -31,6 +31,8 @@ export class DonHangService {
     private readonly sanPhamRepository: Repository<SanPham>,
     @InjectRepository(NhanVien)
     private readonly nhanVienRepository: Repository<NhanVien>,
+    @InjectRepository(ThongTinLienHe)
+    private readonly thongTinLienHeRepository: Repository<ThongTinLienHe>,
   ) {}
   async addToCart(
     accountId: number,
@@ -366,16 +368,92 @@ export class DonHangService {
   async create(
     createDonHangDto: CreateDonHangDto,
     account: any,
-  ): Promise<DonHang> {
-    await this.nhanVienRepository.findOne({
-      where: { taiKhoan: { id: account.id } },
+  ): Promise<DonHang | null> {
+    // 1. Kiểm tra khách hàng tồn tại
+    const khachHang = await this.khachHangRepository.findOne({
+      where: { id: createDonHangDto.khachHangId },
     });
 
-    const donHang = this.donHangRepository.create({
-      ...createDonHangDto,
-    });
+    if (!khachHang) {
+      throw new NotFoundException(
+        `Khách hàng với ID ${createDonHangDto.khachHangId} không tồn tại`,
+      );
+    }
 
-    return this.donHangRepository.save(donHang);
+    // 2. Kiểm tra sản phẩm và tính tổng tiền
+    let tongTien = 0;
+    const chiTietList: {
+      sanPham: SanPham;
+      soLuong: number;
+      donGia: number;
+      thanhTien: number;
+    }[] = [];
+
+    for (const chiTiet of createDonHangDto.chiTietDonHangs) {
+      const sanPham = await this.sanPhamRepository.findOne({
+        where: { id: chiTiet.sanPhamId },
+      });
+
+      if (!sanPham) {
+        throw new NotFoundException(
+          `Sản phẩm với ID ${chiTiet.sanPhamId} không tồn tại`,
+        );
+      }
+
+      if (sanPham.soLuongHienCon < chiTiet.soLuong) {
+        throw new BadRequestException(
+          `Sản phẩm ${sanPham.ten} chỉ còn ${sanPham.soLuongHienCon} trong kho`,
+        );
+      }
+
+      const thanhTien = sanPham.gia * chiTiet.soLuong;
+      tongTien += thanhTien;
+
+      chiTietList.push({
+        sanPham,
+        soLuong: chiTiet.soLuong,
+        donGia: sanPham.gia,
+        thanhTien,
+      });
+    }
+
+    // 3. Tạo thông tin liên hệ
+    const thongTinLienHe = new ThongTinLienHe();
+    thongTinLienHe.tenNguoiNhan = createDonHangDto.tenNguoiNhan;
+    thongTinLienHe.sdt = createDonHangDto.sdtNguoiNhan;
+    thongTinLienHe.diaChi = createDonHangDto.diaChiGiaoHang;
+    thongTinLienHe.ghiChu = createDonHangDto.ghiChu || '';
+
+    const savedThongTin =
+      await this.thongTinLienHeRepository.save(thongTinLienHe);
+
+    const donHang = new DonHang();
+    donHang.tenDonHang = createDonHangDto.tenDonHang;
+    donHang.ngayChuanBiHang = createDonHangDto.ngayChuanBiHang;
+    donHang.ngayNhanHang = createDonHangDto.ngayNhanHang;
+    donHang.donViVanChuyen = createDonHangDto.donViVanChuyen;
+    donHang.phuongThucThanhToan = createDonHangDto.phuongThucThanhToan;
+    donHang.trangThaiDonHang = TrangThaiDonHang.DA_XAC_NHAN;
+    donHang.tongTien = tongTien;
+    donHang.khachHang = khachHang;
+    donHang.thongTinLienHe = savedThongTin;
+
+    const savedDonHang = await this.donHangRepository.save(donHang);
+
+    for (const item of chiTietList) {
+      const chiTietDonHang = new ChiTietDonHang();
+      chiTietDonHang.maDonHang = savedDonHang.id;
+      chiTietDonHang.maSanPham = item.sanPham.id;
+      chiTietDonHang.soLuong = item.soLuong;
+      chiTietDonHang.donGia = item.donGia;
+      chiTietDonHang.thanhTien = item.thanhTien;
+      chiTietDonHang.donHang = savedDonHang;
+      chiTietDonHang.sanPham = item.sanPham;
+
+      await this.chiTietDonHangRepository.save(chiTietDonHang);
+    }
+
+    return this.findOne(savedDonHang.id);
   }
 
   findAll() {

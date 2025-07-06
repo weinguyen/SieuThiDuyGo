@@ -7,6 +7,7 @@ import { KhachHang } from '../khach-hang/entities/khach-hang.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SanPham } from '../san-pham/entities/san-pham.entity';
 import { NhanVien } from '../nhan-vien/entities/nhan-vien.entity';
+import { ThongTinLienHe } from '../thong-tin-lien-he/entities/thong-tin-lien-he.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { NhanVien } from '../nhan-vien/entities/nhan-vien.entity';
       KhachHang,
       SanPham,
       NhanVien,
+      ThongTinLienHe,
     ]),
   ],
   controllers: [DonHangController],
