@@ -12,6 +12,7 @@ import { Type } from 'class-transformer';
 import { KhachHang } from '../../khach-hang/entities/khach-hang.entity';
 import { ChiTietDonHang } from '../../chi-tiet-don-hang/entities/chi-tiet-don-hang.entity';
 import { ThongTinLienHe } from 'src/modules/thong-tin-lien-he/entities/thong-tin-lien-he.entity';
+import { on } from 'events';
 
 @Entity('don_hang')
 export class DonHang {
@@ -55,7 +56,10 @@ export class DonHang {
   @IsNumber()
   tongTien: number;
 
-  @ManyToOne(() => KhachHang, (khachHang) => khachHang.donHangs)
+  @ManyToOne(() => KhachHang, (khachHang) => khachHang.donHangs, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   @JoinColumn({ name: 'khachHangId' })
   khachHang: KhachHang;
   @OneToMany(() => ChiTietDonHang, (chiTietDonHang) => chiTietDonHang.donHang, {
@@ -64,6 +68,8 @@ export class DonHang {
   chiTietDonHangs: ChiTietDonHang[];
   @ManyToOne(() => ThongTinLienHe, (thongTinLienHe) => thongTinLienHe.donHang, {
     cascade: true,
+    onDelete: 'SET NULL',
+    nullable: true,
   })
   thongTinLienHe: ThongTinLienHe;
 }

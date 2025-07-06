@@ -36,6 +36,7 @@ export class DanhGia {
 
   @ManyToOne(() => KhachHang, (khachHang) => khachHang.danhGias, {
     onDelete: 'CASCADE',
+    nullable: true,
   })
   @JoinColumn({ name: 'khachHangId' })
   @ApiProperty({ description: 'Khách hàng đánh giá' })
@@ -45,7 +46,9 @@ export class DanhGia {
   @ApiProperty({ description: 'ID khách hàng' })
   khachHangId: number;
 
-  @ManyToOne(() => SanPham, (sanPham) => sanPham.danhGias)
+  @ManyToOne(() => SanPham, (sanPham) => sanPham.danhGias, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'sanPhamId' })
   @ApiProperty({ description: 'Sản phẩm được đánh giá' })
   sanPham: SanPham;

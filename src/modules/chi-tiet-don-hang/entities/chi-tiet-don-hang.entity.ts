@@ -37,6 +37,8 @@ export class ChiTietDonHang {
   @JoinColumn({ name: 'maDonHang' })
   donHang: DonHang;
 
-  @ManyToOne(() => SanPham, (sanPham) => sanPham.chiTietDonHangs)
+  @ManyToOne(() => SanPham, (sanPham) => sanPham.chiTietDonHangs, {
+    onDelete: 'CASCADE',
+  })
   sanPham: SanPham;
 }

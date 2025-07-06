@@ -34,7 +34,9 @@ export class ThongTinLienHe {
   @ApiProperty()
   @IsString()
   ghiChu: string;
-  @ManyToOne(() => KhachHang, (khachHang) => khachHang.thongTinLienHe)
+  @ManyToOne(() => KhachHang, (khachHang) => khachHang.thongTinLienHe, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   khachHang: KhachHang;
   @OneToMany(() => DonHang, (donHang) => donHang.thongTinLienHe)

@@ -60,11 +60,17 @@ export class SanPham {
   @IsNumber()
   gia: number;
 
-  @ManyToOne(() => NhanVien, (nhanVien) => nhanVien.sanPhams)
+  @ManyToOne(() => NhanVien, (nhanVien) => nhanVien.sanPhams, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   @JoinColumn({ name: 'nhanVienId' })
   nhanVien: NhanVien;
 
-  @ManyToOne(() => DanhMuc, (danhMuc) => danhMuc.sanPhams)
+  @ManyToOne(() => DanhMuc, (danhMuc) => danhMuc.sanPhams, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   @JoinColumn({ name: 'danhMucId' })
   danhMuc: DanhMuc;
 

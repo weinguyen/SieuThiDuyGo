@@ -64,7 +64,7 @@ export class LichSuKhoHang {
   @IsNumber()
   nhanVienId?: number;
 
-  @ManyToOne(() => SanPham, { onDelete: 'CASCADE' })
+  @ManyToOne(() => SanPham, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'sanPhamId' })
   sanPham: SanPham;
 
