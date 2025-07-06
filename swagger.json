@@ -1214,6 +1214,67 @@
         ]
       }
     },
+    "/don-hang": {
+      "post": {
+        "description": "Tạo đơn hàng trực tiếp cho khách hàng",
+        "operationId": "DonHangController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDonHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tạo đơn hàng thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DonHang"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dữ liệu không hợp lệ"
+          },
+          "404": {
+            "description": "Khách hàng hoặc sản phẩm không tồn tại"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tạo đơn hàng mới (Admin/Nhân viên)",
+        "tags": [
+          "DonHang"
+        ]
+      },
+      "get": {
+        "operationId": "DonHangController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
     "/khuyen-mai": {
       "post": {
         "operationId": "KhuyenMaiController_create",
@@ -1874,6 +1935,51 @@
           "sdtNguoiNhan",
           "tenNguoiNhan",
           "ghiChu"
+        ]
+      },
+      "CreateDonHangDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "DonHang": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "tenDonHang": {
+            "type": "string"
+          },
+          "ngayChuanBiHang": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "ngayNhanHang": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "donViVanChuyen": {
+            "type": "string"
+          },
+          "phuongThucThanhToan": {
+            "type": "string"
+          },
+          "trangThaiDonHang": {
+            "type": "string"
+          },
+          "tongTien": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "tenDonHang",
+          "ngayChuanBiHang",
+          "ngayNhanHang",
+          "donViVanChuyen",
+          "phuongThucThanhToan",
+          "trangThaiDonHang",
+          "tongTien"
         ]
       },
       "CreateKhuyenMaiDto": {

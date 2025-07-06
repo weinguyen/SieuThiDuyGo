@@ -361,8 +361,19 @@ export class DonHangService {
 
     await this.donHangRepository.update(donHangId, { tongTien });
   }
-  create(createDonHangDto: CreateDonHangDto) {
-    return 'This action adds a new donHang';
+  async create(
+    createDonHangDto: CreateDonHangDto,
+    account: any,
+  ): Promise<DonHang> {
+    await this.khachHangRepository.findOne({
+      where: { taiKhoan: { id: account.id } },
+    });
+
+    const donHang = this.donHangRepository.create({
+      ...createDonHangDto,
+    });
+
+    return this.donHangRepository.save(donHang);
   }
 
   findAll() {

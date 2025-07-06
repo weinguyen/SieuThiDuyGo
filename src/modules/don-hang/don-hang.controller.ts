@@ -21,6 +21,8 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { CurrentAccount } from 'src/common/decorators/account.decorator';
 import { AddToCartDto } from './dto/addtocard.dto';
 import { CheckoutCartDto } from './dto/checkoutcard.dto';
+import { CreateDonHangDto } from './dto/create-don-hang.dto';
+import { DonHang } from './entities/don-hang.entity';
 @ApiBearerAuth()
 @Controller('don-hang')
 export class DonHangController {
@@ -120,5 +122,36 @@ export class DonHangController {
     @CurrentAccount() account: any,
   ) {
     return this.donHangService.checkoutCart(account.id, checkoutData);
+  }
+
+  @Post()
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.NHANVIEN)
+  @ApiOperation({
+    summary: 'Tạo đơn hàng mới (Admin/Nhân viên)',
+    description: 'Tạo đơn hàng trực tiếp cho khách hàng',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Tạo đơn hàng thành công',
+    type: DonHang,
+  })
+  @ApiResponse({ status: 400, description: 'Dữ liệu không hợp lệ' })
+  @ApiResponse({
+    status: 404,
+    description: 'Khách hàng hoặc sản phẩm không tồn tại',
+  })
+  create(
+    @Body() createDonHangDto: CreateDonHangDto,
+    @CurrentAccount() account: any,
+  ) {
+    return this.donHangService.create(createDonHangDto, account);
+  }
+
+  @Get()
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.NHANVIEN)
+  findAll() {
+    return this.donHangService.findAll();
   }
 }
