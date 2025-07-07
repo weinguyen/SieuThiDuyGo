@@ -58,8 +58,9 @@ export class DonHangService {
         khachHang: { id: khachHang.id },
         trangThaiDonHang: TrangThaiDonHang.CHO_XAC_NHAN,
       },
-      relations: ['chiTietDonHangs', 'khachHang.id'],
+      relations: ['chiTietDonHangs'],
     });
+
     if (!donHangGioHang) {
       const today = new Date();
       const tomorrow = new Date(today);
@@ -86,7 +87,7 @@ export class DonHangService {
       donHangGioHang = await this.donHangRepository.save(donHangGioHang);
     }
     const existingChiTiet = donHangGioHang.chiTietDonHangs?.find(
-      (ct) => ct.sanPham.id === addToCartDto.sanPhamId,
+      (ct) => ct.maSanPham === addToCartDto.sanPhamId,
     );
 
     if (existingChiTiet) {
@@ -303,12 +304,18 @@ export class DonHangService {
         khachHang: { id: khachHang.id },
         trangThaiDonHang: TrangThaiDonHang.CHO_XAC_NHAN,
       },
+      relations: {
+        khachHang: true,
+        chiTietDonHangs: {
+          sanPham: true,
+        },
+      },
     });
 
     if (!donHangGioHang) {
       throw new NotFoundException('Không tìm thấy giỏ hàng để thanh toán');
     }
-
+    console.log(donHangGioHang);
     if (
       !donHangGioHang.chiTietDonHangs ||
       donHangGioHang.chiTietDonHangs.length === 0
@@ -337,7 +344,7 @@ export class DonHangService {
       checkoutCartDto.ngayChuanBiHang || new Date();
     donHangGioHang.ngayNhanHang = checkoutCartDto.ngayNhanHang;
     donHangGioHang.thongTinLienHe = thongTinLienHe;
-    donHangGioHang.trangThaiDonHang = TrangThaiDonHang.DANG_GIAO;
+    donHangGioHang.trangThaiDonHang = TrangThaiDonHang.DA_XAC_NHAN;
     const donHangDaXacNhan = await this.donHangRepository.save(donHangGioHang);
 
     for (const chiTiet of donHangGioHang.chiTietDonHangs) {
@@ -458,6 +465,15 @@ export class DonHangService {
 
   findAll() {
     return this.donHangRepository.find({
+      relations: ['khachHang', 'chiTietDonHangs', 'thongTinLienHe'],
+    });
+  }
+  async findByKhachHang(account: any) {
+    const khachHang = await this.khachHangRepository.findOne({
+      where: { taiKhoan: { id: account.id } },
+    });
+    return this.donHangRepository.find({
+      where: { khachHang: { id: khachHang?.id } },
       relations: ['khachHang', 'chiTietDonHangs', 'thongTinLienHe'],
     });
   }

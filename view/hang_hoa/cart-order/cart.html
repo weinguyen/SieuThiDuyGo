@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - Vegist</title>
+    <link rel="stylesheet" href="cart-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-leaf"></i>
+                <span>Vegist</span>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">TRANG CHỦ</a>
+                <a href="#" class="nav-link">CỬA HÀNG</a>
+                <a href="#" class="nav-link">BỘ SƯU TẬP</a>
+                <a href="#" class="nav-link">BLOG</a>
+                <a href="#" class="nav-link">TRANG</a>
+            </nav>
+            <div class="header-actions">
+                <i class="fas fa-search"></i>
+                <div class="icon-badge">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge">0</span>
+                </div>
+                <div class="icon-badge">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartBadge">0</span>
+                </div>
+                <div class="user-menu">
+                    <i class="fas fa-user"></i>
+                    <div class="user-dropdown">
+                        <a href="#" id="loginBtn">Đăng nhập</a>
+                        <a href="#" id="registerBtn">Đăng ký</a>
+                        <a href="#" id="logoutBtn" style="display: none;">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="../index.html">Trang chủ</a> / <span>Giỏ hàng</span>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-container">
+        <div class="container">
+            <h1 class="page-title">Giỏ hàng của bạn</h1>
+            
+            <div class="cart-content" id="cartContent">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Đang tải giỏ hàng...</p>
+                </div>
+            </div>
+
+            <!-- Empty Cart -->
+            <div class="empty-cart" id="emptyCart" style="display: none;">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Giỏ hàng trống</h2>
+                <p>Bạn chưa có sản phẩm nào trong giỏ hàng</p>
+                <a href="../index.html" class="continue-shopping-btn">Tiếp tục mua sắm</a>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="cart-items" id="cartItems" style="display: none;">
+                <div class="cart-header">
+                    <div class="header-item">Sản phẩm</div>
+                    <div class="header-price">Giá</div>
+                    <div class="header-quantity">Số lượng</div>
+                    <div class="header-total">Tổng</div>
+                    <div class="header-action">Thao tác</div>
+                </div>
+                
+                <div class="cart-list" id="cartList">
+                    <!-- Cart items will be loaded here -->
+                </div>
+
+                <div class="cart-actions">
+                    <button class="clear-cart-btn" id="clearCartBtn">
+                        <i class="fas fa-trash"></i>
+                        Xóa tất cả
+                    </button>
+                    <button class="update-cart-btn" id="updateCartBtn">
+                        <i class="fas fa-sync"></i>
+                        Cập nhật giỏ hàng
+                    </button>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <div class="summary-content">
+                        <h3>Tổng đơn hàng</h3>
+                        <div class="summary-row">
+                            <span>Tạm tính:</span>
+                            <span id="subtotal">0 VNĐ</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Phí vận chuyển:</span>
+                            <span id="shipping">Miễn phí</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Tổng cộng:</span>
+                            <span id="total">0 VNĐ</span>
+                        </div>
+                        <button class="checkout-btn" id="checkoutBtn">
+                            <i class="fas fa-credit-card"></i>
+                            Tiến hành thanh toán
+                        </button>
+                        <a href="../index.html" class="continue-shopping">
+                            <i class="fas fa-arrow-left"></i>
+                            Tiếp tục mua sắm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Đăng nhập</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Tên đăng nhập:</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mật khẩu:</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>

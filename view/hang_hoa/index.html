@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tôm - lớn (5 lb) - Vegist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>Vegist</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link">TRANG CHỦ <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="nav-link">CỬA HÀNG <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="nav-link">BỘ SƯU TẬP <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="nav-link">BLOG</a>
+                <a href="#" class="nav-link">TRANG <i class="fas fa-chevron-down"></i></a>
+                <a href="#" class="nav-link buy-now">MUA VEGIST <span class="hot-badge">HOT</span></a>
+            </nav>
+            <div class="header-actions">
+                <i class="fas fa-search"></i>
+                <div class="icon-badge">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge">0</span>
+                </div>
+                <div class="icon-badge">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="#">Trang chủ</a> / <span></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="product-layout">
+                <!-- Product Images -->
+                <div class="product-images">
+                    <div class="main-image">
+                        <img id="mainImage" src="https://vegina-store.myshopify.com/cdn/shop/products/25_525c2823-683a-445e-b187-6fe7ca3f5a8e.jpg?v=1620641853&width=720" alt="Tôm lớn">
+                    </div>
+                    <div class="thumbnail-images">
+                     
+                        <img src="https://vegina-store.myshopify.com/cdn/shop/products/25_525c2823-683a-445e-b187-6fe7ca3f5a8e.jpg?v=1620641853&width=720" alt="Tôm 4" class="thumbnail" onclick="changeImage(this)">
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="product-details">
+                    <h1 class="product-title"></h1>
+                    <div class="product-rating">
+         
+                    </div>
+                    
+                    <div class="availability">
+                        <strong>Khả dụng:</strong> <span class="in-stock"></span>
+                    </div>
+                    
+                    <div class="price">
+                        <span class="current-price"></span>
+                    </div>
+                    
+                    <div class="product-description">
+                        <p></p>
+                    </div>
+                    
+                    <div class="product-options">
+                        <div class="size-options">
+                 
+                        </div>
+                        
+                        <div class="quantity-selector">
+                            <label>Số lượng:</label>
+                            <div class="quantity-controls">
+                                <button class="qty-btn" onclick="decreaseQty()">-</button>
+                                <input type="number" id="quantity" value="1" min="1">
+                                <button class="qty-btn" onclick="increaseQty()">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Thêm vào giỏ hàng
+                        </button>
+                        <button class="buy-now-btn">Mua ngay bây giờ</button>
+                    </div>
+                    
+                    <div class="wishlist">
+                        <i class="far fa-heart"></i>
+                        <span>Danh sách mong muốn</span>
+                    </div>
+                    
+                    <div class="product-meta">
+                        <div class="product-id">
+                            <strong>Mã sản phẩm:</strong> <span>123456</span>
+                        </div>
+                        <div class="social-share">
+                            <strong>Chia sẻ:</strong>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+          
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="product-tabs">
+        <div class="container">
+            <div class="tab-buttons">
+       
+    
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="reviews-section">
+        <div class="container">
+            <div class="reviews-header">
+                <h3>Đánh giá của khách hàng</h3>
+                <button class="write-review-btn" onclick="showReviewModal()">VIẾT BÀI ĐÁNH GIÁ</button>
+            </div>
+            
+            <div class="review-summary">
+                <div class="average-rating">
+                    <div class="stars">
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <div class="rating-text">Chưa có đánh giá</div>
+                </div>
+            </div>
+            
+            <div id="reviewsList" class="reviews-list">
+                <!-- Reviews will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="related-products">
+        <div class="container">
+            <h2>Sản phẩm liên quan</h2>
+            <div class="products-grid">
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

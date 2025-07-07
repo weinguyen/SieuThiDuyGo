@@ -154,4 +154,8 @@ export class DonHangController {
   findAll() {
     return this.donHangService.findAll();
   }
+  @Get('khach-hang')
+  findByKhachHangId(@CurrentAccount() account: any) {
+    return this.donHangService.findByKhachHang(account);
+  }
 }

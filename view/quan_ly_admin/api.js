@@ -1,28 +1,58 @@
-const API_BASE_URL = "";
+
+
+const API_BASE_URL = "https://btlcsdl.onrender.com";
 
 const getAuthToken = () => {
     return localStorage.getItem("authToken");
 };
 
-const fetchWithAuth = async (url, options = {}) => {
-    const token = getAuthToken();
-    const headers = {
-        "Content-Type": "application/json",
-        ...options.headers,
-    };
-
+function fetchWithAuth(url, options = {}) {
+    const token = localStorage.getItem('authToken');
+    if (!options.headers) options.headers = {};
     if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+        options.headers['Authorization'] = `Bearer ${token}`;
     }
-
-    const response = await fetch(url, { ...options, headers });
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Something went wrong");
+    if (options.body && !options.headers['Content-Type']) {
+        options.headers['Content-Type'] = 'application/json';
     }
+    return fetch(url, options)
+        .then(res => {
+            if (!res.ok) throw new Error(res.statusText || 'Request failed');
+            // Nếu không có content (204 No Content hoặc body rỗng), trả về null
+            const contentType = res.headers.get('content-type');
+            if (res.status === 204 || !contentType || !contentType.includes('application/json')) {
+                return null;
+            }
+            return res.json();
+        });
+}
 
-    return response.json();
+export const createKhuyenMai = (createKhuyenMai) => {
+    return fetchWithAuth(`${API_BASE_URL}/khuyen-mai`, {
+        method: "POST",
+        body: JSON.stringify(createKhuyenMai),
+    });
+};
+
+export const findAllKhuyenMai = () => {
+    return fetchWithAuth(`${API_BASE_URL}/khuyen-mai`);
+};
+
+export const findOneKhuyenMai = (id) => {
+    return fetchWithAuth(`${API_BASE_URL}/khuyen-mai/${id}`);
+};
+
+export const updateKhuyenMai = (id,updateKhuyenMaiDto) => {
+    return fetchWithAuth(`${API_BASE_URL}/khuyen-mai/${id}`,{
+        method: "PATCH",
+        body: JSON.stringify(updateKhuyenMaiDto),
+    });
+};
+
+export const removeKhuyenMai = (id) => {
+    return fetchWithAuth(`${API_BASE_URL}/khuyen-mai/${id}`,{
+        method: "DELETE",
+    });
 };
 
 export const createSanPham = (createSanPhamDto) => {
@@ -58,10 +88,20 @@ export const removeSanPham = (id) => {
     });
 };
 
+export const updateSanPham = (id, updateSanPhamDto) => {
+    return fetchWithAuth(`${API_BASE_URL}/san-pham/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(updateSanPhamDto),
+    });
+};
+
 export const login = (loginDto) => {
     return fetchWithAuth(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         body: JSON.stringify(loginDto),
+    }).then(response => {
+        localStorage.setItem('authToken', response.access_token);
+        return response;
     });
 };
 
@@ -127,6 +167,19 @@ export const findAllNhanVien = () => {
 
 export const findOneNhanVien = (id) => {
     return fetchWithAuth(`${API_BASE_URL}/nhan-vien/${id}`);
+};
+
+export const updateNhanVien = (id, updateNhanVienDto) => {
+    return fetchWithAuth(`${API_BASE_URL}/nhan-vien/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(updateNhanVienDto),
+    });
+};
+
+export const removeNhanVien = (id) => {
+    return fetchWithAuth(`${API_BASE_URL}/nhan-vien/${id}`, {
+        method: "DELETE",
+    });
 };
 
 export const createDanhGia = (createDanhGiaDto) => {
@@ -207,6 +260,42 @@ export const removeKhachHang = (id) => {
     });
 };
 
+export const createHistoryKhoHang = (createhistoryKhoHangDto) => {
+    return fetchWithAuth(`${API_BASE_URL}/lich-su-kho-hang`, {
+        method: "POST",
+        body: JSON.stringify(createhistoryKhoHangDto),
+    });
+};
+
+export const findAllHistoryKhoHang = () => {
+    return fetchWithAuth(`${API_BASE_URL}/lich-su-kho-hang`);
+};
+
+
+
+export const findOneHistoryKhoHangBySanPhamId = (id) => {
+    return fetchWithAuth(`${API_BASE_URL}/lich-su-kho-hang/san-pham/${id}`);
+};
+
+export const findOneHistoryKhoHangById = (id) => {
+    return fetchWithAuth(`${API_BASE_URL}/lich-su-kho-hang/${id}`);
+};
+
+export const statisticsKhoHang = (id) => {
+    return fetchWithAuth(`${API_BASE_URL}/lich-su-kho-hang/bao-cao/thong-ke`);
+};
+
+export const addDonHang = (addDonHangDto) => {
+    return fetchWithAuth(`${API_BASE_URL}/don-hang`, {
+        method: "POST",
+        body: JSON.stringify(addDonHangDto),
+    });
+};
+
+export const getDonHang = () => {
+    return fetchWithAuth(`${API_BASE_URL}/don-hang`);
+};
+
 export const addToCart = (addToCartDto) => {
     return fetchWithAuth(`${API_BASE_URL}/don-hang/cart/add`, {
         method: "POST",
@@ -242,3 +331,31 @@ export const checkoutCart = (checkoutCartDto) => {
         body: JSON.stringify(checkoutCartDto),
     });
 };
+
+export async function uploadImage(formData) {
+    try {
+        const response = await fetch(`https://api.imgbb.com/1/upload`, {
+            method: "POST",
+            body: formData,
+        });
+        if (!response.ok) throw new Error("Failed to upload image");
+        return await response.json();
+    } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error;
+    }
+}
+
+console.log('updateSanPham available:', typeof updateSanPham);
+
+export async function editCategory(id) {
+    try {
+        const category = await updateDanhMuc(id,{
+            "tenDanhMuc": "string",
+            "moTa": "string"
+        });
+        this.showCategoryModal(category);
+    } catch (error) {
+        this.showNotification('Lỗi tải thông tin danh mục: ' + error.message, 'error');
+    }
+}

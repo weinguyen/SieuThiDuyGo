@@ -18,6 +18,8 @@ import { DonHang } from './modules/don-hang/entities/don-hang.entity';
 import { DonHangModule } from './modules/don-hang/don-hang.module';
 import { KhuyenMaiModule } from './modules/khuyen_mai/khuyen_mai.module';
 import { LichSuKhoHangModule } from './modules/lich_su_kho_hang/lich_su_kho_hang.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
     SanPhamModule,
@@ -53,6 +55,16 @@ import { LichSuKhoHangModule } from './modules/lich_su_kho_hang/lich_su_kho_hang
     ChiTietDonHangModule,
     KhuyenMaiModule,
     LichSuKhoHangModule,
+    ServeStaticModule.forRoot(
+      {
+        rootPath: join(__dirname, '..', 'view/quan_ly_admin'),
+        serveRoot: '/admin',
+      },
+      {
+        rootPath: join(__dirname, '..', 'view'),
+        serveRoot: '/',
+      },
+    ),
   ],
   providers: [
     {

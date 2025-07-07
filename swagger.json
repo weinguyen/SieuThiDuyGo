@@ -1275,6 +1275,25 @@
         ]
       }
     },
+    "/don-hang/khach-hang": {
+      "get": {
+        "operationId": "DonHangController_findByKhachHangId",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
     "/khuyen-mai": {
       "post": {
         "operationId": "KhuyenMaiController_create",
@@ -1903,9 +1922,6 @@
           "phuongThucThanhToan": {
             "type": "string"
           },
-          "trangThaiDonHang": {
-            "type": "string"
-          },
           "diaChiGiaoHang": {
             "type": "string",
             "description": "Địa chỉ giao hàng"
@@ -1930,7 +1946,6 @@
           "ngayNhanHang",
           "donViVanChuyen",
           "phuongThucThanhToan",
-          "trangThaiDonHang",
           "diaChiGiaoHang",
           "sdtNguoiNhan",
           "tenNguoiNhan",
