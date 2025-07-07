@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ? item.sanPham.hinhAnhs[0].hinhAnh
             : "/placeholder.svg?height=60&width=60"
 
-        const productName = item.sanPham ? item.sanPham.ten : "Sản phẩm không xác định"
+        const productName = item.sanPham.ten ? item.sanPham.ten : "Sản phẩm không xác định"
         const productPrice = item.sanPham ? item.sanPham.gia : 0
         const itemTotal = productPrice * item.soLuong
 

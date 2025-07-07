@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,79 +13,108 @@
             align-items: center;
             gap: 15px;
         }
-        
+
         #customerAuthSection {
             display: flex;
             align-items: center;
         }
-        
+
         #customerLoginBtn {
             display: inline-block !important;
             visibility: visible !important;
             opacity: 1 !important;
         }
-        
+
         .auth-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
-        
+
         #showLoginBtn:hover {
             background-color: #218838 !important;
         }
     </style>
 </head>
+
 <body>
     <!-- Customer Login Modal -->
-    <div id="customerLoginModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-        <div class="modal-content" style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 8px;">
-            <span class="close" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+    <div id="customerLoginModal" class="modal"
+        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content"
+            style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 8px;">
+            <span class="close"
+                style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
             <h2>Đăng nhập khách hàng</h2>
             <form id="customerLoginForm">
                 <div style="margin-bottom: 15px;">
                     <label for="customerUsername" style="display: block; margin-bottom: 5px;">Tên đăng nhập:</label>
-                    <input type="text" id="customerUsername" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <input type="text" id="customerUsername" required
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                 </div>
                 <div style="margin-bottom: 15px;">
                     <label for="customerPassword" style="display: block; margin-bottom: 5px;">Mật khẩu:</label>
-                    <input type="password" id="customerPassword" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <input type="password" id="customerPassword" required
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                 </div>
-                <button type="submit" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Đăng nhập</button>
+                <button type="submit"
+                    style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Đăng
+                    nhập</button>
             </form>
             <div style="text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
                 <p style="margin: 0; color: #666; font-size: 14px;">Chưa có tài khoản?</p>
-                <button id="showRegisterBtn" style="background: none; border: none; color: #28a745; cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 5px;">Đăng ký ngay</button>
+                <button id="showRegisterBtn"
+                    style="background: none; border: none; color: #28a745; cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 5px;">Đăng
+                    ký ngay</button>
             </div>
         </div>
     </div>
 
     <!-- Customer Registration Modal -->
-    <div id="customerRegisterModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-        <div class="modal-content" style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 450px; border-radius: 8px;">
-            <span class="close" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+    <div id="customerRegisterModal" class="modal"
+        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content"
+            style="background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 450px; border-radius: 8px;">
+            <span class="close"
+                style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
             <h2>Đăng ký tài khoản khách hàng</h2>
             <form id="customerRegisterForm">
                 <div style="margin-bottom: 15px;">
-                    <label for="registerTenKhachHang" style="display: block; margin-bottom: 5px; font-weight: 500;">Họ và tên:</label>
-                    <input type="text" id="registerTenKhachHang" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" placeholder="Nhập họ và tên của bạn">
+                    <label for="registerTenKhachHang" style="display: block; margin-bottom: 5px; font-weight: 500;">Họ
+                        và tên:</label>
+                    <input type="text" id="registerTenKhachHang" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
+                        placeholder="Nhập họ và tên của bạn">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label for="registerSdt" style="display: block; margin-bottom: 5px; font-weight: 500;">Số điện thoại:</label>
-                    <input type="tel" id="registerSdt" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" placeholder="Nhập số điện thoại">
+                    <label for="registerSdt" style="display: block; margin-bottom: 5px; font-weight: 500;">Số điện
+                        thoại:</label>
+                    <input type="tel" id="registerSdt" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
+                        placeholder="Nhập số điện thoại">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <label for="registerTenDangNhap" style="display: block; margin-bottom: 5px; font-weight: 500;">Tên đăng nhập:</label>
-                    <input type="text" id="registerTenDangNhap" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" placeholder="Nhập tên đăng nhập">
+                    <label for="registerTenDangNhap" style="display: block; margin-bottom: 5px; font-weight: 500;">Tên
+                        đăng nhập:</label>
+                    <input type="text" id="registerTenDangNhap" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
+                        placeholder="Nhập tên đăng nhập">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <label for="registerMatKhau" style="display: block; margin-bottom: 5px; font-weight: 500;">Mật khẩu:</label>
-                    <input type="password" id="registerMatKhau" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" placeholder="Nhập mật khẩu">
+                    <label for="registerMatKhau" style="display: block; margin-bottom: 5px; font-weight: 500;">Mật
+                        khẩu:</label>
+                    <input type="password" id="registerMatKhau" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
+                        placeholder="Nhập mật khẩu">
                 </div>
-                <button type="submit" style="background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 500;">Đăng ký</button>
+                <button type="submit"
+                    style="background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; font-weight: 500;">Đăng
+                    ký</button>
             </form>
             <div style="text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
                 <p style="margin: 0; color: #666; font-size: 14px;">Đã có tài khoản?</p>
-                <button id="showLoginBtn" style="background: none; border: none; color: #28a745; cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 5px;">Đăng nhập ngay</button>
+                <button id="showLoginBtn"
+                    style="background: none; border: none; color: #28a745; cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 5px;">Đăng
+                    nhập ngay</button>
             </div>
         </div>
     </div>
@@ -97,12 +127,8 @@
                 <span>Vegist</span>
             </div>
             <nav class="nav">
-                <a href="#" class="nav-link active">HOME <i class="fas fa-chevron-down"></i></a>
-                <a href="#" class="nav-link">SHOP <i class="fas fa-chevron-down"></i></a>
-                <a href="#" class="nav-link">COLLECTION <i class="fas fa-chevron-down"></i></a>
-                <a href="#" class="nav-link">BLOGS</a>
-                <a href="#" class="nav-link">PAGES <i class="fas fa-chevron-down"></i></a>
-                <a href="#" class="nav-link buy-now">BUY NOW <span class="hot-badge">HOT</span></a>
+                <a href="#" class="nav-link active">Trang chủ <i class="fas fa-chevron-down"></i></a>
+                <a href="./hang_hoa/cart-order/orders.html" class="nav-link buy-now">Đơn hàng</a>
             </nav>
             <div class="header-actions">
                 <i class="fas fa-search"></i>
@@ -116,15 +142,18 @@
                 </div>
                 <!-- Customer Login/Logout -->
                 <div id="customerAuthSection" style="margin-left: 15px;">
-                    <button id="customerLoginBtn" class="auth-btn" style="background-color: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">
+                    <button id="customerLoginBtn" class="auth-btn"
+                        style="background-color: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">
                         <i class="fas fa-user"></i> Đăng nhập
                     </button>
-                    <button id="customerRegisterBtn" class="auth-btn" style="background-color: #17a2b8; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; margin-left: 8px;">
+                    <button id="customerRegisterBtn" class="auth-btn"
+                        style="background-color: #17a2b8; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; margin-left: 8px;">
                         <i class="fas fa-user-plus"></i> Đăng ký
                     </button>
                     <div id="customerInfo" style="display: none;">
                         <span id="customerName" style="margin-right: 10px; color: #333; font-weight: 500;"></span>
-                        <button id="customerLogoutBtn" class="auth-btn" style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        <button id="customerLogoutBtn" class="auth-btn"
+                            style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
                             <i class="fas fa-sign-out-alt"></i> Đăng xuất
                         </button>
                     </div>
@@ -142,7 +171,7 @@
                 <span>Browse category</span>
             </div>
             <ul class="category-list">
-               
+
             </ul>
         </aside>
 
@@ -156,7 +185,8 @@
                     <button class="shop-btn">Shop now</button>
                 </div>
                 <div class="hero-image">
-                    <img src="https://vegina-store.myshopify.com/cdn/shop/products/25_525c2823-683a-445e-b187-6fe7ca3f5a8e.jpg?v=1620641853&width=720" alt="Fresh vegetables and fruits">
+                    <img src="https://vegina-store.myshopify.com/cdn/shop/products/25_525c2823-683a-445e-b187-6fe7ca3f5a8e.jpg?v=1620641853&width=720"
+                        alt="Fresh vegetables and fruits">
                 </div>
             </section>
 
@@ -164,23 +194,26 @@
             <section class="trending">
                 <h2>Trending products</h2>
                 <div class="products-grid">
-                    
+
                 </div>
             </section>
         </main>
     </div>
 
     <!-- Login Required Message -->
-    <div id="loginRequiredMessage" >
-        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 500px; width: 100%;">
+    <div id="loginRequiredMessage">
+        <div
+            style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 500px; width: 100%;">
             <i class="fas fa-lock" style="font-size: 48px; color: #6c757d; margin-bottom: 20px;"></i>
             <h2 style="color: #333; margin-bottom: 15px;">Vui lòng đăng nhập để xem nội dung</h2>
-            <p style="color: #666; margin-bottom: 30px; line-height: 1.6;">Chỉ khách hàng đã đăng nhập mới có thể xem sản phẩm và mua hàng.</p>
-            <button id="showLoginBtn" style="background-color: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 500; transition: background-color 0.3s;">
+            <p style="color: #666; margin-bottom: 30px; line-height: 1.6;">Chỉ khách hàng đã đăng nhập mới có thể xem
+                sản phẩm và mua hàng.</p>
+            <button id="showLoginBtn"
+                style="background-color: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 500; transition: background-color 0.3s;">
                 <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
             </button>
             <p style="margin-top: 20px; font-size: 14px; color: #888;">
-                <i class="fas fa-info-circle"></i> 
+                <i class="fas fa-info-circle"></i>
                 Hoặc click vào nút "Đăng nhập" ở góc trên bên phải
             </p>
         </div>
@@ -188,4 +221,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

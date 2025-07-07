@@ -472,9 +472,15 @@ export class DonHangService {
     const khachHang = await this.khachHangRepository.findOne({
       where: { taiKhoan: { id: account.id } },
     });
+
     return this.donHangRepository.find({
       where: { khachHang: { id: khachHang?.id } },
-      relations: ['khachHang', 'chiTietDonHangs', 'thongTinLienHe'],
+      relations: [
+        'khachHang',
+        'chiTietDonHangs',
+        'thongTinLienHe',
+        'chiTietDonHangs.sanPham',
+      ],
     });
   }
 
