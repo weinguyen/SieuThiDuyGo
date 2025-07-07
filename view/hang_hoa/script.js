@@ -441,48 +441,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load cart badge on page load
   updateCartBadge()
 
-  // Buy now functionality
-  const buyNowBtn = document.querySelector(".buy-now-btn")
-  buyNowBtn.addEventListener("click", async () => {
-    const quantity = Number.parseInt(document.getElementById("quantity").value)
-
-    // Check if user is logged in
-    const authToken = localStorage.getItem("customerAuthToken")
-    if (!authToken) {
-      showNotification("Vui lòng đăng nhập để mua hàng!", "error")
-      return
-    }
-
-    // Add to cart first
-    const cartData = {
-      sanPhamId: productId,
-      soLuong: quantity,
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/don-hang/cart/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(cartData),
-      })
-
-      if (response.ok) {
-        showNotification("Đang chuyển đến trang thanh toán...", "success")
-        // Redirect to checkout
-        setTimeout(() => {
-          window.location.href = "cart-order/checkout.html"
-        }, 1000)
-      } else {
-        throw new Error("Failed to add to cart")
-      }
-    } catch (error) {
-      console.error("Error in buy now:", error)
-      showNotification("Có lỗi xảy ra khi mua hàng!", "error")
-    }
-  })
 
   // Wishlist functionality
   const wishlistBtn = document.querySelector(".wishlist")

@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return `
                 <div class="order-item">
-                    <img src="${imageUrl}" alt="${productName}">
+                   
                     <div class="item-details">
                         <h4>${productName}</h4>
                         <p>Số lượng: ${item.soLuong} | Đơn giá: ${productPrice.toLocaleString("vi-VN")} VNĐ</p>

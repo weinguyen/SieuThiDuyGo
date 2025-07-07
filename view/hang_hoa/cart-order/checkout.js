@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const summaryItem = document.createElement("div")
       summaryItem.className = "summary-item"
       summaryItem.innerHTML = `
-                <img src="${imageUrl}" alt="${item.sanPham.ten}">
                 <div class="item-info">
                     <h4>${item.sanPham.ten}</h4>
                     <p>Số lượng: ${item.soLuong}</p>
