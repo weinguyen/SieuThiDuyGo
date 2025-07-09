@@ -1,6 +1,6 @@
 
 
-const API_BASE_URL = "https://btlcsdl.onrender.com";
+const API_BASE_URL = "";
 
 const getAuthToken = () => {
     return localStorage.getItem("authToken");

@@ -5,25 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegist Admin Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <h2>Đăng nhập Admin</h2>
+            <h2><i class="fas fa-shield-alt" style="color: #22c55e; margin-right: 0.5rem;"></i>Đăng nhập Admin</h2>
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="username">Tên đăng nhập:</label>
-                    <input type="text" id="username" required>
+                    <label for="username"><i class="fas fa-user"></i> Tên đăng nhập</label>
+                    <input type="text" id="username" required placeholder="Nhập tên đăng nhập">
                 </div>
                 <div class="form-group">
-                    <label for="password">Mật khẩu:</label>
-                    <input type="password" id="password" required>
+                    <label for="password"><i class="fas fa-lock"></i> Mật khẩu</label>
+                    <input type="password" id="password" required placeholder="Nhập mật khẩu">
                 </div>
-                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </button>
             </form>
         </div>
     </div>
@@ -40,28 +43,40 @@
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#" class="nav-link active" data-page="overview"><i class="fas fa-tachometer-alt"></i>
-                            Tổng quan</a></li>
-                    <li><a href="#" class="nav-link" data-page="products"><i class="fas fa-box"></i> Sản phẩm</a></li>
-                    <li><a href="#" class="nav-link" data-page="categories"><i class="fas fa-tags"></i> Danh mục</a>
-                    </li>
-                    <li><a href="#" class="nav-link" data-page="customers"><i class="fas fa-users"></i> Khách hàng</a>
-                    </li>
-                    <li><a href="#" class="nav-link" data-page="employees"><i class="fas fa-user-tie"></i> Nhân viên</a>
-                    </li>
-                    <li><a href="#" class="nav-link" data-page="reviews"><i class="fas fa-star"></i> Đánh giá</a></li>
-                    <li><a href="#" class="nav-link" data-page="promotions"><i class="fas fa-gift"></i> Khuyến mãi</a>
-                    </li>
-                    <li><a href="#" class="nav-link" data-page="accounts"><i class="fas fa-user-cog"></i> Tài khoản</a>
-                    </li>
-                    <li><a href="#" class="nav-link" data-page="lich-su-kho-hang"><i
-                                class="fas fa-tachometer-alt"></i>Lịch sử
-                            kho hàng</a></li>
-                    <li><a href="#" class="nav-link" data-page="Don-hang"><i class="fas fa-box"></i>Đơn hàng</a></li>
+                    <li><a href="#" class="nav-link active" data-page="overview">
+                            <i class="fas fa-chart-line"></i> Tổng quan
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="products">
+                            <i class="fas fa-box"></i> Sản phẩm
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="categories">
+                            <i class="fas fa-tags"></i> Danh mục
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="customers">
+                            <i class="fas fa-users"></i> Khách hàng
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="employees">
+                            <i class="fas fa-user-tie"></i> Nhân viên
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="reviews">
+                            <i class="fas fa-star"></i> Đánh giá
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="promotions">
+                            <i class="fas fa-gift"></i> Khuyến mãi
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="accounts">
+                            <i class="fas fa-user-cog"></i> Tài khoản
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="lich-su-kho-hang">
+                            <i class="fas fa-warehouse"></i> Lịch sử kho hàng
+                        </a></li>
+                    <li><a href="#" class="nav-link" data-page="Don-hang">
+                            <i class="fas fa-shopping-cart"></i> Đơn hàng
+                        </a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
-                <button id="logoutBtn" class="btn btn-secondary">
+                <button id="logoutBtn" class="btn btn-secondary" style="width: 100%;">
                     <i class="fas fa-sign-out-alt"></i> Đăng xuất
                 </button>
             </div>
@@ -90,7 +105,7 @@
                 <!-- Overview Page -->
                 <div id="overviewPage" class="page active">
                     <div class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card hover-lift">
                             <div class="stat-icon">
                                 <i class="fas fa-box"></i>
                             </div>
@@ -99,7 +114,7 @@
                                 <p>Tổng sản phẩm</p>
                             </div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card hover-lift">
                             <div class="stat-icon">
                                 <i class="fas fa-users"></i>
                             </div>
@@ -108,7 +123,7 @@
                                 <p>Khách hàng</p>
                             </div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card hover-lift">
                             <div class="stat-icon">
                                 <i class="fas fa-tags"></i>
                             </div>
@@ -117,7 +132,7 @@
                                 <p>Danh mục</p>
                             </div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card hover-lift">
                             <div class="stat-icon">
                                 <i class="fas fa-star"></i>
                             </div>
@@ -140,7 +155,7 @@
                     <div class="search-bar">
                         <input type="text" id="productSearch" placeholder="Tìm kiếm sản phẩm...">
                         <button class="btn btn-secondary" id="searchProductBtn">
-                            <i class="fas fa-search"></i>
+                            <i class="fas fa-search"></i> Tìm kiếm
                         </button>
                     </div>
                     <div class="table-container">
@@ -175,7 +190,6 @@
                                     <th>ID</th>
                                     <th>Tên danh mục</th>
                                     <th>Mô tả</th>
-
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -195,9 +209,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Họ tên</th>
-
                                     <th>Số điện thoại</th>
-
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -256,25 +268,28 @@
 
                 <!-- Promotions Page -->
                 <div id="promotionsPage" class="page">
-                    <h2>Quản lý khuyến mãi</h2>
-                    <button id="addPromotionBtn" class="btn btn-success" style="margin-bottom: 16px;">Thêm khuyến
-                        mãi</button>
-                    <table id="promotionsTable" class="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Mô tả</th>
-                                <th>Ngày bắt đầu</th>
-                                <th>Ngày kết thúc</th>
-                                <th>Phần trăm giảm</th>
-                                <th>Sản phẩm áp dụng</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dữ liệu sẽ được render bằng JS -->
-                        </tbody>
-                    </table>
+                    <div class="page-header">
+                        <h2>Quản lý khuyến mãi</h2>
+                        <button id="addPromotionBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Thêm khuyến mãi
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="promotionsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Mô tả</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Phần trăm giảm</th>
+                                    <th>Sản phẩm áp dụng</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Accounts Page -->
@@ -308,7 +323,7 @@
                         </button>
                     </div>
                     <div class="table-container">
-                        <table id="lich-su-kho-hang-table" class="table table-hover">
+                        <table id="lich-su-kho-hang-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -334,7 +349,7 @@
                         </button>
                     </div>
                     <div class="table-container">
-                        <table id="donHangTable" class="table table-hover">
+                        <table id="donHangTable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -353,7 +368,7 @@
         </main>
     </div>
 
-    <!-- Modals -->
+    <!-- Product Modal -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -362,46 +377,50 @@
             </div>
             <form id="productForm">
                 <div class="form-group">
-                    <label for="productName">Tên sản phẩm:</label>
-                    <input type="text" id="productName" required>
+                    <label for="productName">Tên sản phẩm</label>
+                    <input type="text" id="productName" required placeholder="Nhập tên sản phẩm">
                 </div>
                 <div class="form-group">
-                    <label for="productCategory">Danh mục:</label>
-                    <select id="productCategory" required></select>
+                    <label for="productCategory">Danh mục</label>
+                    <select id="productCategory" required>
+                        <option value="">Chọn danh mục</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="productQuantity">Số lượng:</label>
-                    <input type="number" id="productQuantity" required>
+                    <label for="productQuantity">Số lượng</label>
+                    <input type="number" id="productQuantity" required placeholder="Nhập số lượng">
                 </div>
                 <div class="form-group">
-                    <label for="productExpiry">Hạn sử dụng:</label>
+                    <label for="productExpiry">Hạn sử dụng</label>
                     <input type="date" id="productExpiry" required>
                 </div>
                 <div class="form-group">
-                    <label for="productManufacture">Ngày sản xuất:</label>
+                    <label for="productManufacture">Ngày sản xuất</label>
                     <input type="date" id="productManufacture" required>
                 </div>
                 <div class="form-group">
-                    <label for="productPrice">Giá:</label>
-                    <input type="number" id="productPrice" step="0.01" required>
+                    <label for="productPrice">Giá</label>
+                    <input type="number" id="productPrice" step="0.01" required placeholder="Nhập giá sản phẩm">
                 </div>
                 <div class="form-group">
-                    <label for="productDescription">Mô tả:</label>
-                    <textarea id="productDescription" rows="4"></textarea>
+                    <label for="productDescription">Mô tả</label>
+                    <textarea id="productDescription" rows="4" placeholder="Nhập mô tả sản phẩm"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="productImage">Mô tả:</label>
-                    <input type="file" id="productImage" rows="4">
+                    <label for="productImage">Hình ảnh</label>
+                    <input type="file" id="productImage" multiple accept="image/*">
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" id="cancelProductBtn">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
                 </div>
-
             </form>
         </div>
     </div>
 
+    <!-- Category Modal -->
     <div id="categoryModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -410,21 +429,24 @@
             </div>
             <form id="categoryForm">
                 <div class="form-group">
-                    <label for="categoryName">Tên danh mục:</label>
-                    <input type="text" id="categoryName" required>
+                    <label for="categoryName">Tên danh mục</label>
+                    <input type="text" id="categoryName" required placeholder="Nhập tên danh mục">
                 </div>
                 <div class="form-group">
-                    <label for="categoryDescription">Mô tả:</label>
-                    <textarea id="categoryDescription" rows="3"></textarea>
+                    <label for="categoryDescription">Mô tả</label>
+                    <textarea id="categoryDescription" rows="3" placeholder="Nhập mô tả danh mục"></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" id="cancelCategoryBtn">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Employee Modal -->
     <div id="employeeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -433,182 +455,239 @@
             </div>
             <form id="employeeForm">
                 <div class="form-group">
-                    <label for="employeeName">Họ tên:</label>
-                    <input type="text" id="employeeName" required>
+                    <label for="employeeName">Họ tên</label>
+                    <input type="text" id="employeeName" required placeholder="Nhập họ tên">
                 </div>
                 <div class="form-group">
-                    <label for="employeePosition">Chức vụ:</label>
-                    <input type="text" id="employeePosition" required>
+                    <label for="employeePosition">Chức vụ</label>
+                    <input type="text" id="employeePosition" required placeholder="Nhập chức vụ">
                 </div>
                 <div class="form-group">
-                    <label for="employeeEmail">Email:</label>
-                    <input type="email" id="employeeEmail" required>
+                    <label for="employeeAddress">Địa chỉ</label>
+                    <input type="text" id="employeeAddress" placeholder="Nhập địa chỉ">
                 </div>
                 <div class="form-group">
-                    <label for="employeePhone">Số điện thoại:</label>
-                    <input type="tel" id="employeePhone">
+                    <label for="employeePhone">Số điện thoại</label>
+                    <input type="tel" id="employeePhone" placeholder="Nhập số điện thoại">
+                </div>
+                <div class="form-group">
+                    <label for="employeeUsername">Tên đăng nhập</label>
+                    <input type="text" id="employeeUsername" required placeholder="Nhập tên đăng nhập">
+                </div>
+                <div class="form-group">
+                    <label for="employeePassword">Mật khẩu</label>
+                    <input type="password" id="employeePassword" required placeholder="Nhập mật khẩu">
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" id="cancelEmployeeBtn">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal thêm/sửa khuyến mãi -->
-    <div id="promotionModal" class="modal"
-        style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
-        <div class="modal-content"
-            style="background:#fff; margin:10% auto; padding:20px; border-radius:8px; max-width:400px;">
-            <span class="close" style="float:right; font-size:28px; cursor:pointer;">&times;</span>
-            <h3 id="promotionModalTitle">Thêm khuyến mãi</h3>
+    <!-- Promotion Modal -->
+    <div id="promotionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="promotionModalTitle">Thêm khuyến mãi</h3>
+                <span class="close">&times;</span>
+            </div>
             <form id="promotionForm">
                 <input type="hidden" id="promotionId">
-                <div style="margin-bottom:12px;">
-                    <label for="promotionDesc">Mô tả:</label>
-                    <textarea id="promotionDesc" rows="2" style="width:100%; padding:8px;"></textarea>
+                <div class="form-group">
+                    <label for="promotionDesc">Mô tả</label>
+                    <textarea id="promotionDesc" rows="2" placeholder="Nhập mô tả khuyến mãi"></textarea>
                 </div>
-                <div style="margin-bottom:12px;">
-                    <label for="promotionStart">Ngày bắt đầu:</label>
-                    <input type="date" id="promotionStart" required style="width:100%; padding:8px;">
+                <div class="form-group">
+                    <label for="promotionStart">Ngày bắt đầu</label>
+                    <input type="date" id="promotionStart" required>
                 </div>
-                <div style="margin-bottom:12px;">
-                    <label for="promotionEnd">Ngày kết thúc:</label>
-                    <input type="date" id="promotionEnd" required style="width:100%; padding:8px;">
+                <div class="form-group">
+                    <label for="promotionEnd">Ngày kết thúc</label>
+                    <input type="date" id="promotionEnd" required>
                 </div>
-                <div style="margin-bottom:16px;">
-                    <label for="promotionPercent">Phần trăm giảm (%):</label>
-                    <input type="number" id="promotionPercent" min="1" max="100" required
-                        style="width:100%; padding:8px;">
+                <div class="form-group">
+                    <label for="promotionPercent">Phần trăm giảm (%)</label>
+                    <input type="number" id="promotionPercent" min="1" max="100" required placeholder="Nhập % giảm giá">
                 </div>
-                <div style="margin-bottom:16px;">
-                    <label for="promotionProducts">Sản phẩm áp dụng:</label>
-                    <select id="promotionProducts" multiple style="width:100%; padding:8px; min-height:80px;"></select>
+                <div class="form-group">
+                    <label for="promotionProducts">Sản phẩm áp dụng</label>
+                    <select id="promotionProducts" multiple style="min-height: 120px;">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                    <small style="color: #64748b;">Giữ Ctrl để chọn nhiều sản phẩm</small>
                 </div>
-                <button type="submit" class="btn btn-success" style="width:100%;">Lưu</button>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="document.getElementById('promotionModal').style.display='none'">Hủy</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
-    <div id="historyModal" class="modal" style="display:none;">
+    <!-- History Modal -->
+    <div id="historyModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Thêm giao dịch kho hàng</h3>
-                <span class="close" id="closeHistoryModal"
-                    style="float:right; font-size:28px; cursor:pointer;">&times;</span>
+                <span class="close" id="closeHistoryModal">&times;</span>
             </div>
             <form id="addHistoryKhoHangForm">
                 <div class="form-group">
-                    <label for="historySanPhamId">Sản phẩm ID:</label>
-                    <input type="number" id="historySanPhamId" required>
+                    <label for="historySanPhamId">Sản phẩm ID</label>
+                    <input type="number" id="historySanPhamId" required placeholder="Nhập ID sản phẩm">
                 </div>
                 <div class="form-group">
-                    <label for="historyLoaiGiaoDich">Loại giao dịch:</label>
+                    <label for="historyLoaiGiaoDich">Loại giao dịch</label>
                     <select id="historyLoaiGiaoDich" required>
+                        <option value="">Chọn loại giao dịch</option>
                         <option value="nhap_kho">Nhập kho</option>
                         <option value="xuat_kho">Xuất kho</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="historySoLuongThayDoi">Số lượng thay đổi:</label>
-                    <input type="number" id="historySoLuongThayDoi" required>
+                    <label for="historySoLuongThayDoi">Số lượng thay đổi</label>
+                    <input type="number" id="historySoLuongThayDoi" required placeholder="Nhập số lượng">
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" id="cancelHistoryBtn">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Thêm
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="donHangModal" class="modal" style="display:none;">
-        <div class="modal-content">
+    <!-- Don Hang Modal -->
+    <div id="donHangModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
                 <h3>Thêm đơn hàng</h3>
-                <span class="close" id="closeDonHangModal"
-                    style="float:right; font-size:28px; cursor:pointer;">&times;</span>
+                <span class="close" id="closeDonHangModal">&times;</span>
             </div>
             <form id="addDonHangForm">
                 <div class="form-group">
-                    <label for="donHangKhachHangId">ID Khách hàng:</label>
-                    <input type="number" id="donHangKhachHangId" required>
+                    <label for="donHangKhachHangId">ID Khách hàng</label>
+                    <input type="number" id="donHangKhachHangId" required placeholder="Nhập ID khách hàng">
                 </div>
                 <div class="form-group">
-                    <label for="donHangTen">Tên đơn hàng:</label>
-                    <input type="text" id="donHangTen" required>
+                    <label for="donHangTen">Tên đơn hàng</label>
+                    <input type="text" id="donHangTen" required placeholder="Nhập tên đơn hàng">
                 </div>
                 <div class="form-group">
-                    <label for="donHangPhuongThuc">Phương thức thanh toán:</label>
-
+                    <label for="donHangPhuongThuc">Phương thức thanh toán</label>
                     <select id="donHangPhuongThuc" required>
+                        <option value="">Chọn phương thức</option>
                         <option value="Banking">Banking</option>
-                        <option value=Cod">Cod</option>
+                        <option value="Cod">COD</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="donHangNgayChuanBi">Ngày chuẩn bị hàng:</label>
-                    <input type="date" id="donHangNgayChuanBi" required>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="donHangNgayChuanBi">Ngày chuẩn bị hàng</label>
+                        <input type="date" id="donHangNgayChuanBi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="donHangNgayNhan">Ngày nhận hàng</label>
+                        <input type="date" id="donHangNgayNhan" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="donHangNgayNhan">Ngày nhận hàng:</label>
-                    <input type="date" id="donHangNgayNhan" required>
+                    <label for="donHangDonViVC">Đơn vị vận chuyển</label>
+                    <input type="text" id="donHangDonViVC" required placeholder="Nhập đơn vị vận chuyển">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="donHangTenNguoiNhan">Tên người nhận</label>
+                        <input type="text" id="donHangTenNguoiNhan" required placeholder="Nhập tên người nhận">
+                    </div>
+                    <div class="form-group">
+                        <label for="donHangSdtNguoiNhan">SĐT người nhận</label>
+                        <input type="text" id="donHangSdtNguoiNhan" required placeholder="Nhập số điện thoại">
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="donHangDonViVC">Đơn vị vận chuyển:</label>
-                    <input type="text" id="donHangDonViVC" required>
+                    <label for="donHangDiaChi">Địa chỉ giao hàng</label>
+                    <input type="text" id="donHangDiaChi" required placeholder="Nhập địa chỉ giao hàng">
                 </div>
                 <div class="form-group">
-                    <label for="donHangTenNguoiNhan">Tên người nhận:</label>
-                    <input type="text" id="donHangTenNguoiNhan" required>
+                    <label for="donHangGhiChu">Ghi chú</label>
+                    <input type="text" id="donHangGhiChu" placeholder="Nhập ghi chú (tùy chọn)">
                 </div>
                 <div class="form-group">
-                    <label for="donHangSdtNguoiNhan">SĐT người nhận:</label>
-                    <input type="text" id="donHangSdtNguoiNhan" required>
-                </div>
-                <div class="form-group">
-                    <label for="donHangDiaChi">Địa chỉ giao hàng:</label>
-                    <input type="text" id="donHangDiaChi" required>
-                </div>
-                <div class="form-group">
-                    <label for="donHangGhiChu">Ghi chú:</label>
-                    <input type="text" id="donHangGhiChu">
-                </div>
-                <div class="form-group">
-                    <label>Chi tiết đơn hàng:</label>
-                    <div id="chiTietDonHangList">
+                    <label>Chi tiết đơn hàng</label>
+                    <div id="chiTietDonHangList" style="border: 2px solid #e5e7eb; border-radius: 12px; padding: 1rem;">
                         <div class="chi-tiet-row">
-                            <input type="number" class="chiTietSanPhamId" placeholder="Sản phẩm ID" required>
+                            <input type="number" class="chiTietSanPhamId" placeholder="ID Sản phẩm" required>
                             <input type="number" class="chiTietSoLuong" placeholder="Số lượng" required>
                         </div>
                     </div>
-                    <button type="button" id="addChiTietBtn" class="btn btn-secondary" style="margin-top:5px;">+ Thêm
-                        sản phẩm</button>
+                    <button type="button" id="addChiTietBtn" class="btn btn-secondary" style="margin-top: 0.5rem;">
+                        <i class="fas fa-plus"></i> Thêm sản phẩm
+                    </button>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" id="cancelDonHangBtn">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Thêm đơn hàng
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="chiTietDonHangModal" class="modal" style="display:none;">
-        <div class="modal-content">
+    <!-- Chi Tiet Don Hang Modal -->
+    <div id="chiTietDonHangModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
                 <h3>Chi tiết đơn hàng</h3>
-                <span class="close" id="closeChiTietDonHangModal"
-                    style="float:right; font-size:28px; cursor:pointer;">&times;</span>
+                <span class="close" id="closeChiTietDonHangModal">&times;</span>
             </div>
-            <div id="chiTietDonHangContent">
-                <!-- Nội dung chi tiết sẽ được render bằng JS -->
+            <div id="chiTietDonHangContent" style="max-height: 70vh; overflow-y: auto;">
+                <!-- Content will be populated by JavaScript -->
             </div>
         </div>
     </div>
 
     <script type="module" src="api.js"></script>
     <script type="module" src="admin.js"></script>
+    <script>
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
 
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function () {
+                    sidebar.classList.toggle('open');
+                });
+            }
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function (e) {
+                if (window.innerWidth <= 1024) {
+                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                        sidebar.classList.remove('open');
+                    }
+                }
+            });
+
+            // Update page title when navigating
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function () {
+                    const pageTitle = this.textContent.trim();
+                    document.getElementById('pageTitle').textContent = pageTitle;
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

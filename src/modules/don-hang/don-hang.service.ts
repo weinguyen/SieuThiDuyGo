@@ -465,7 +465,11 @@ export class DonHangService {
 
   findAll() {
     return this.donHangRepository.find({
-      relations: ['khachHang', 'chiTietDonHangs', 'thongTinLienHe'],
+      relations: [
+        'khachHang',
+        'chiTietDonHangs.sanPham.hinhAnhs',
+        'thongTinLienHe',
+      ],
     });
   }
   async findByKhachHang(account: any) {

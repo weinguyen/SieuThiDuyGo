@@ -20,7 +20,7 @@ body {
 /* Header */
 .header {
     background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -141,7 +141,7 @@ body {
 
 .product-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
 }
 
@@ -191,7 +191,7 @@ body {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .product-title {
@@ -202,7 +202,7 @@ body {
 
 .product-rating {
     display: flex;
-   
+
     gap: 10px;
     margin-bottom: 15px;
 }
@@ -407,7 +407,7 @@ body {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     gap: 15px;
 }
@@ -656,7 +656,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     transition: transform 0.3s;
 }
@@ -712,7 +712,7 @@ body {
 .product-rating {
     display: flex;
     flex-direction: column;
- 
+
     gap: 5px;
 }
 
@@ -732,12 +732,12 @@ body {
         grid-template-columns: 1fr 1fr;
         gap: 30px;
     }
-    
+
     .sidebar {
         grid-column: 1 / -1;
         flex-direction: row;
     }
-    
+
     .products-grid {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -748,19 +748,19 @@ body {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .sidebar {
         flex-direction: column;
     }
-    
+
     .action-buttons {
         flex-direction: column;
     }
-    
+
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .nav {
         display: none;
     }
@@ -770,7 +770,7 @@ body {
     .products-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .thumbnail-images {
         flex-wrap: wrap;
     }

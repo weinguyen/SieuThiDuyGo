@@ -202,8 +202,10 @@ document.addEventListener("DOMContentLoaded", () => {
         : "/placeholder.svg?height=80&width=80"
 
     div.innerHTML = `
+            <div class="item-image">
+                <img src="${imageUrl}" alt="${item.sanPham}" >
+            </div>
             <div class="item-info">
-                <img src="${imageUrl}" alt="${item.sanPham.ten}" class="item-image">
                 <div class="item-details">
                     <h4>${item.sanPham.ten}</h4>
                     <p>Mã SP: ${item.sanPham.id}</p>

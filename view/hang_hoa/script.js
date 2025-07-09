@@ -874,7 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Gửi đánh giá:", reviewData)
 
     // Gọi API tạo đánh giá
-    fetch("https://btlcsdl.onrender.com/danh-gia", {
+    fetch(`${API_BASE_URL}/danh-gia`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

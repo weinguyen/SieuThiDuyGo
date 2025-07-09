@@ -25,7 +25,7 @@ export class LichSuKhoHang {
   @ApiProperty({ description: 'Mã lịch sử (PK)' })
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   @ApiProperty({ description: 'Mã sản phẩm (FK)' })
   @IsNumber()
   sanPhamId: number;
@@ -65,10 +65,8 @@ export class LichSuKhoHang {
   nhanVienId?: number;
 
   @ManyToOne(() => SanPham, { onDelete: 'SET NULL', nullable: true })
-  @JoinColumn({ name: 'sanPhamId' })
   sanPham: SanPham;
 
   @ManyToOne(() => NhanVien, { onDelete: 'SET NULL', nullable: true })
-  @JoinColumn({ name: 'nhanVienId' })
   nhanVien?: NhanVien;
 }
