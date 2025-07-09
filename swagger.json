@@ -1080,6 +1080,29 @@
         ]
       }
     },
+    "/don-hang/cart/count": {
+      "get": {
+        "operationId": "DonHangController_getCartCount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lấy số lượng sản phẩm trong giỏ hàng thành công"
+          },
+          "403": {
+            "description": "Chỉ khách hàng mới có quyền xem số lượng sản phẩm trong giỏ hàng"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Đếm số lượng sản phẩm trong giỏ hàng (Khách hàng)",
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
     "/don-hang/cart/update/{maSanPham}/{soLuong}": {
       "patch": {
         "operationId": "DonHangController_updateCartItem",

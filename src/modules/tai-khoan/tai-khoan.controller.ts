@@ -15,7 +15,6 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 @Controller('taikhoan')
 export class TaiKhoanController {
   constructor(private readonly taiKhoanService: TaiKhoanService) {}
-  @Public()
   @Get()
   findAll() {
     return this.taiKhoanService.findAll();

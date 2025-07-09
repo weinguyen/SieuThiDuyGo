@@ -1,6 +1,7 @@
   const API_BASE_URL = "";
 
         // Global variables
+    
         let cartCount = 0;
         let wishlistCount = 0;
 
@@ -94,24 +95,12 @@
 
         async function verifyToken(token) {
             try {
-                const response = await fetch(`${API_BASE_URL}/taikhoan`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+               
 
-                if (!response.ok) {
-                    throw new Error('Token không hợp lệ');
-                }
-
-                const accounts = await response.json();
+             
                 const customerName = localStorage.getItem('customerName');
-                const currentAccount = accounts.find(account => account.tenDangNhap === customerName);
-
-                if (!currentAccount || !['khachhang', 'khach_hang'].includes(currentAccount.loai)) {
-                    throw new Error('Không có quyền truy cập');
-                }
-
+            
+            
                 showMainContent();
                 loadContent();
             } catch (error) {
@@ -163,25 +152,15 @@
 
                 const data = await response.json();
 
-                // Verify customer role
-                const accountsResponse = await fetch(`${API_BASE_URL}/taikhoan`, {
-                    headers: {
-                        'Authorization': `Bearer ${data.access_token}`
-                    }
-                });
+            
+        
 
-                if (!accountsResponse.ok) {
-                    throw new Error('Không thể kiểm tra vai trò');
-                }
-
-                const accounts = await accountsResponse.json();
-                const currentAccount = accounts.find(account => account.tenDangNhap === username);
 
 
 
                 localStorage.setItem('customerAuthToken', data.access_token);
                 localStorage.setItem('customerName', username);
-
+                
                 showNotification('Đăng nhập thành công!', 'success');
                 closeModals();
                 showMainContent();

@@ -349,8 +349,10 @@ class AdminDashboard {
         products.forEach(product => {
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td><img src="${product.hinhAnhs[0]?.hinhAnh || ''}" alt="${product.ten}" class="product-image"></td>
                 <td>${product.id}</td>
                 <td>${product.ten}</td>
+                
                 <td>${product.danhMuc?.tenDanhMuc || 'N/A'}</td>
                 <td>${product.gia?.toLocaleString('vi-VN')} VNĐ</td>
                 <td><span class="status-badge status-active">Hoạt động</span></td>
@@ -497,7 +499,7 @@ class AdminDashboard {
             row.innerHTML = `
                 <td>${account.id}</td>
                 <td>${account.tenDangNhap}</td>
-                <td>${account.email}</td>
+                <td>${account.sdt}</td>
                 <td>${account.loai}</td>
                 <td><span class="status-badge status-active">Hoạt động</span></td>
                 <td>
@@ -523,6 +525,7 @@ class AdminDashboard {
 
         if (product) {
             title.textContent = 'Sửa sản phẩm';
+        
             document.getElementById('productName').value = product.ten || '';
             document.getElementById('productPrice').value = product.gia || '';
             document.getElementById('productDescription').value = product.moTa || '';
@@ -1083,3 +1086,5 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+

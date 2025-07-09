@@ -243,7 +243,9 @@ export class DonHangService {
       relations: {
         khachHang: true,
         chiTietDonHangs: {
-          sanPham: true,
+          sanPham: {
+            hinhAnhs: true,
+          },
         },
       },
     });
@@ -346,16 +348,6 @@ export class DonHangService {
     donHangGioHang.thongTinLienHe = thongTinLienHe;
     donHangGioHang.trangThaiDonHang = TrangThaiDonHang.DA_XAC_NHAN;
     const donHangDaXacNhan = await this.donHangRepository.save(donHangGioHang);
-
-    for (const chiTiet of donHangGioHang.chiTietDonHangs) {
-      await this.sanPhamRepository.update(
-        { id: chiTiet.maSanPham },
-        {
-          soLuongHienCon: () => `soLuongHienCon - ${chiTiet.soLuong}`,
-          soLuongDaBan: () => `soLuongDaBan + ${chiTiet.soLuong}`,
-        },
-      );
-    }
 
     return this.findOne(donHangDaXacNhan.id);
   }
@@ -482,8 +474,10 @@ export class DonHangService {
       relations: [
         'khachHang',
         'chiTietDonHangs',
-        'thongTinLienHe',
         'chiTietDonHangs.sanPham',
+        'chiTietDonHangs.sanPham.hinhAnhs',
+
+        'thongTinLienHe',
       ],
     });
   }
@@ -492,6 +486,13 @@ export class DonHangService {
     return this.donHangRepository.findOne({
       where: { id },
       relations: ['khachHang', 'chiTietDonHangs', 'thongTinLienHe'],
+    });
+  }
+  getCartCount(accountId: number): Promise<number> {
+    return this.donHangRepository.count({
+      where: {
+        khachHang: { taiKhoan: { id: accountId } },
+      },
     });
   }
 

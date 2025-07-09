@@ -61,6 +61,25 @@ export class DonHangController {
     return this.donHangService.getCart(account.id);
   }
 
+  @Get('cart/count')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.KHACHHANG)
+  @ApiOperation({
+    summary: 'Đếm số lượng sản phẩm trong giỏ hàng (Khách hàng)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Lấy số lượng sản phẩm trong giỏ hàng thành công',
+  })
+  @ApiResponse({
+    status: 403,
+    description:
+      'Chỉ khách hàng mới có quyền xem số lượng sản phẩm trong giỏ hàng',
+  })
+  getCartCount(@CurrentAccount() account: any) {
+    return this.donHangService.getCartCount(account.id);
+  }
+
   @Patch('cart/update/:maSanPham/:soLuong')
   @UseGuards(RolesGuard)
   @Roles(UserRole.KHACHHANG)
