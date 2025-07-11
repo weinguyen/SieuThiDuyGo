@@ -23,6 +23,7 @@ import { AddToCartDto } from './dto/addtocard.dto';
 import { CheckoutCartDto } from './dto/checkoutcard.dto';
 import { CreateDonHangDto } from './dto/create-don-hang.dto';
 import { DonHang } from './entities/don-hang.entity';
+import { UpdateDonHangDto } from './dto/update-don-hang.dto';
 @ApiBearerAuth()
 @Controller('don-hang')
 export class DonHangController {
@@ -176,5 +177,11 @@ export class DonHangController {
   @Get('khach-hang')
   findByKhachHangId(@CurrentAccount() account: any) {
     return this.donHangService.findByKhachHang(account);
+  }
+  @Patch(':id')
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.NHANVIEN)
+  update(@Param('id') id: number, @Body() updateDonHangDto: UpdateDonHangDto) {
+    return this.donHangService.update(id, updateDonHangDto);
   }
 }

@@ -31,7 +31,6 @@ export class CreateKhuyenMaiDto {
   })
   @IsOptional()
   @IsString()
-  @MinLength(10, { message: 'Mô tả phải có ít nhất 10 ký tự' })
   moTa?: string;
 
   @ApiProperty({

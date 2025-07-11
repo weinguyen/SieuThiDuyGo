@@ -1317,6 +1317,44 @@
         ]
       }
     },
+    "/don-hang/{id}": {
+      "patch": {
+        "operationId": "DonHangController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDonHangDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "DonHang"
+        ]
+      }
+    },
     "/khuyen-mai": {
       "post": {
         "operationId": "KhuyenMaiController_create",
@@ -2112,6 +2150,17 @@
           "phuongThucThanhToan",
           "trangThaiDonHang",
           "tongTien"
+        ]
+      },
+      "UpdateDonHangDto": {
+        "type": "object",
+        "properties": {
+          "trangThaiDonHang": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "trangThaiDonHang"
         ]
       },
       "CreateKhuyenMaiDto": {

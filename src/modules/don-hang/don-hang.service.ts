@@ -497,7 +497,9 @@ export class DonHangService {
   }
 
   update(id: number, updateDonHangDto: UpdateDonHangDto) {
-    return `This action updates a #${id} donHang`;
+    return this.donHangRepository.update(id, updateDonHangDto).then(() => {
+      return this.findOne(id);
+    });
   }
 
   remove(id: number) {

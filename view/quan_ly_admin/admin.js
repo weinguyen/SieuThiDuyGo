@@ -499,14 +499,10 @@ class AdminDashboard {
             row.innerHTML = `
                 <td>${account.id}</td>
                 <td>${account.tenDangNhap}</td>
-                <td>${account.sdt}</td>
                 <td>${account.loai}</td>
                 <td><span class="status-badge status-active">Hoạt động</span></td>
                 <td>
                     <div class="action-buttons">
-                        <button class="btn btn-sm btn-warning" onclick="adminDashboard.editAccount(${account.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
                         <button class="btn btn-sm btn-danger" onclick="adminDashboard.deleteAccount(${account.id})">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -576,8 +572,8 @@ class AdminDashboard {
             title.textContent = 'Sửa nhân viên';
             document.getElementById('employeeName').value = employee.hoTen;
             document.getElementById('employeePosition').value = employee.chucVu;
-            document.getElementById('employeeEmail').value = employee.email;
-            document.getElementById('employeePhone').value = employee.soDienThoai || '';
+            document.getElementById('employeeAddress').value = employee.diaChi || '';
+            document.getElementById('employeePhone').value = employee.sdt|| '';
             this.currentEditId = employee.id;
         } else {
             title.textContent = 'Thêm nhân viên';
@@ -815,6 +811,7 @@ class AdminDashboard {
     async editEmployee(id) {
         try {
             const employee = await findOneNhanVien(id);
+            console.log(employee)
             this.showEmployeeModal(employee);
         } catch (error) {
             this.showNotification('Lỗi tải thông tin nhân viên: ' + error.message, 'error');
@@ -824,16 +821,12 @@ class AdminDashboard {
     async editAccount(id) {
         try {
             const account = await findOneTaiKhoan(id);
-            // You can implement account editing modal here
-            this.showNotification('Chức năng sửa tài khoản sẽ được triển khai sớm!', 'warning');
         } catch (error) {
             this.showNotification('Lỗi tải thông tin tài khoản: ' + error.message, 'error');
         }
     }
 
-    // Notification system
     showNotification(message, type = 'success') {
-        // Remove existing notification
         const existingNotification = document.querySelector('.notification');
         if (existingNotification) {
             existingNotification.remove();

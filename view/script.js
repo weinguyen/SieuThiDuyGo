@@ -1,10 +1,9 @@
   const API_BASE_URL = "";
 
-        // Global variables
     
         let cartCount = 0;
         let wishlistCount = 0;
-
+        
         document.addEventListener('DOMContentLoaded', function () {
             initializeApp();
         });
